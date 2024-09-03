@@ -336,7 +336,7 @@ function RegisterPage({auth, register}) {
                         mt='0px'>
                         <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
                             Already have an account?
-                            <NavLink to='/auth/sign-in'>
+                            <NavLink to='/auth/login'>
                                 <Text
                                     color={textColorBrand}
                                     as='span'

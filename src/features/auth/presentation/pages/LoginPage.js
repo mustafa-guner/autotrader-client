@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {
     Box,
     Button,
@@ -29,6 +29,7 @@ function LoginPage({auth, login}) {
     const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
     const textColorBrand = useColorModeValue("brand.500", "white");
     const brandStars = useColorModeValue("brand.500", "brand.400");
+    const navigate = useNavigate();
     const [show, setShow] = React.useState(false);
 
     //Authentication action-reducers
@@ -44,7 +45,8 @@ function LoginPage({auth, login}) {
         e.preventDefault();
 
         login(formData).then(() => {
-            setDisable(false);
+            setDisable(false)
+            navigate('/dashboard');
         }).catch(() => {
             setDisable(false);
         });
@@ -181,7 +183,7 @@ function LoginPage({auth, login}) {
                         mt='0px'>
                         <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
                             Not registered yet?
-                            <NavLink to='/auth/sign-up'>
+                            <NavLink to='/auth/register'>
                                 <Text
                                     color={textColorBrand}
                                     as='span'
