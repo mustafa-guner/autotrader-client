@@ -34,6 +34,17 @@ export const login = (formData) => async (dispatch) => {
     }
 };
 
+export const logout = () => async (dispatch) => {
+    dispatch({type: types.LOGOUT_REQUEST});
+    try {
+        await AuthService.logout();
+        localStorage.removeItem("token");
+        dispatch({type: types.LOGOUT_SUCCESS});
+    } catch (error) {
+        dispatch({type: types.LOGOUT_FAILURE});
+    }
+}
+
 export const forgotPassword = (formData) => async (dispatch) => {
     dispatch({type: types.FORGOT_PASSWORD_REQUEST});
     try {

@@ -2,7 +2,7 @@ import api from "../../../utils/api";
 
 const loadUser = async () => {
     const token = localStorage.getItem('token');
-    return await api('/auth/me', {
+    return await api('/me', {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -19,6 +19,16 @@ const register = async (formData) => {
     return await api('/auth/register', {
         method: 'POST',
         data: formData
+    });
+}
+
+const logout = async () => {
+    const token = localStorage.getItem('token');
+    return await api('/auth/logout', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
     });
 }
 
@@ -39,6 +49,7 @@ const resetPassword = async (formData) => {
 const AuthService = {
     loadUser,
     login,
+    logout,
     register,
     forgotPassword,
     resetPassword

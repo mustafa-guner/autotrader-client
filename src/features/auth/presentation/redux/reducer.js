@@ -7,6 +7,7 @@ const initialState = {
     errors: {
         registration: [],
         login: [],
+        logout: [],
         forgotPassword: [],
         resetPassword: [],
         loadUser: []
@@ -23,6 +24,7 @@ const auth = (state = initialState, action) => {
         // Loading States
         case types.LOGIN_REQUEST:
         case types.REGISTER_REQUEST:
+        case types.LOGOUT_REQUEST:
         case types.FORGOT_PASSWORD_REQUEST:
         case types.LOAD_USER_REQUEST:
             return {
@@ -100,6 +102,30 @@ const auth = (state = initialState, action) => {
                     registration: payload
                 }
             };
+
+        case types.LOGOUT_SUCCESS:
+            return {
+                ...state,
+                user: null,
+                isAuth: false,
+                token: null,
+                loading: false,
+                errors: {
+                    ...state.errors,
+                    login: []
+                }
+            };
+
+        case types.LOGOUT_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                errors: {
+                    ...state.errors,
+                    login: ['Logout failed.']
+                }
+            };
+
         //----------------------------------------------------------
         case types.FORGOT_PASSWORD_SUCCESS:
             return {
