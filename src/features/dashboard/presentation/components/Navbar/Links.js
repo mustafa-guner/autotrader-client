@@ -20,11 +20,11 @@ import {SearchBar} from "./Searchbar";
 import {logout} from '../../../../auth/presentation/redux/action';
 import {connect} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {links} from "../../../../../utils/constants";
 
 function Links(props) {
     const {secondary, logout, auth} = props;
     const navigate = useNavigate();
-    // Chakra Color Mode
     const navbarIcon = useColorModeValue('gray.400', 'white');
     let menuBg = useColorModeValue('white', 'navy.800');
     const textColor = useColorModeValue('secondaryGray.900', 'white');
@@ -41,7 +41,7 @@ function Links(props) {
     const handleLogout = (e) => {
         e.preventDefault();
         return logout().then(() => {
-            navigate('/auth/login');
+            navigate(links.public.auth.login);
         }).catch(() => {
             console.log('Logout Error.')
         });
@@ -115,7 +115,7 @@ function Links(props) {
                     <Avatar
                         _hover={{cursor: 'pointer'}}
                         color="white"
-                        name="Adela Parkson"
+                        name={auth.user.firstname + ' ' + auth.user.lastname}
                         bg="#11047A"
                         size="sm"
                         w="40px"
@@ -134,7 +134,7 @@ function Links(props) {
                             fontSize="sm"
                             fontWeight="700"
                             color={textColor}>
-                            👋&nbsp; Hey, Adela
+                            👋&nbsp; Hey, {auth.user.firstname}
                         </Text>
                     </Flex>
                     <Flex flexDirection="column" p="10px">

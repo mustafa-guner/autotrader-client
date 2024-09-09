@@ -1,14 +1,29 @@
 import {NavLink, useLocation} from "react-router-dom";
 import {Box, Flex, HStack, Icon, Text, useColorModeValue} from "@chakra-ui/react";
 import React from "react";
-import {dashboardLinks} from "../../../../../utils/constants";
+import {links} from "../../../../../utils/constants";
+import {
+    MdBarChart,
+    MdHome,
+    MdOutlineShoppingCart
+} from "react-icons/md";
 
-const links = [
+const sideBarLinks = [
     {
-        path: dashboardLinks.dashboard,
+        path: links.protected.dashboard,
         name: "Dashboard",
-        icon: <Icon />,
-    }
+        icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>
+    },
+    {
+        path: links.protected.shares,
+        name: "Shares",
+        icon: <Icon as={MdOutlineShoppingCart} width='20px' height='20px' color='inherit'/>
+    },
+    {
+        path: links.protected.reports,
+        name: "Reports",
+        icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit'/>
+    },
 ];
 
 function Links() {
@@ -26,7 +41,7 @@ function Links() {
     }
 
     const generateLinks = () => {
-        return links.map((link, index) => {
+        return sideBarLinks.map((link, index) => {
             return (
                 <NavLink key={index} to={link.path}>
                     {link.icon ? (

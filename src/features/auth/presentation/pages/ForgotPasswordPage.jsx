@@ -16,7 +16,7 @@ import {connect} from "react-redux";
 import AuthLayout from "../layouts/AuthLayout";
 import {forgotPassword} from "../redux/action";
 import AlertMessage from "../../../common/presentation/components/AlertMessage";
-import {authLinks} from "../../../../utils/constants";
+import {links} from "../../../../utils/constants";
 
 function ForgotPasswordPage({auth, forgotPassword}) {
     const navigate = useNavigate();
@@ -27,7 +27,6 @@ function ForgotPasswordPage({auth, forgotPassword}) {
     const [disable, setDisable] = useState(false);
     const [formData, setFormData] = useState({});
     const {email} = formData;
-
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
     };
@@ -39,7 +38,7 @@ function ForgotPasswordPage({auth, forgotPassword}) {
             .then(() => {
                 setDisable(false);
                 if (auth.isPasswordResetLinkSent) {
-                    navigate(authLinks.resetPassword);
+                    navigate(links.public.auth.resetPassword);
                 }
             })
             .catch(() => setDisable(false));
@@ -139,7 +138,7 @@ function ForgotPasswordPage({auth, forgotPassword}) {
                     >
                         <Text color={textColor} fontWeight='400' fontSize='14px'>
                             Remembered your password?
-                            <NavLink to={authLinks.login}>
+                            <NavLink to={links.public.auth.login}>
                                 <Text
                                     color={textColorBrand}
                                     as='span'

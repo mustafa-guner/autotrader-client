@@ -27,7 +27,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import AlertMessage from "../../../common/presentation/components/AlertMessage";
 import PublicService from "../../../common/data/public_service";
 import {register} from "../redux/action";
-import {authLinks} from "../../../../utils/constants";
+import {links} from "../../../../utils/constants";
 
 
 function RegisterPage({auth, register}) {
@@ -337,7 +337,7 @@ function RegisterPage({auth, register}) {
                         mt='0px'>
                         <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
                             Already have an account?
-                            <NavLink to={authLinks.login}>
+                            <NavLink to={links.public.auth.login}>
                                 <Text
                                     color={textColorBrand}
                                     as='span'
