@@ -33,7 +33,7 @@ import Avatar1 from "../../../../assets/img/avatars/avatar1.png";
 import Avatar2 from "../../../../assets/img/avatars/avatar2.png";
 import Avatar3 from "../../../../assets/img/avatars/avatar3.png";
 import Avatar4 from "../../../../assets/img/avatars/avatar4.png";
-import TotalSpentLayout from "../layouts/TotalSpentLayout";
+import Summary from "../components/Summary";
 
 function DashboardPage({auth, loadUser}) {
     const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -121,7 +121,7 @@ function DashboardPage({auth, loadUser}) {
                     gridArea={{xl: "1 / 1 / 2 / 3", "2xl": "1 / 1 / 2 / 2"}}>
                     <Flex direction='column'>
                         <SimpleGrid columns={{base: 1, md: 1}} gap='20px'>
-                            <TotalSpentLayout/>
+                            <Summary/>
                         </SimpleGrid>
                         <Text
                             mt='45px'

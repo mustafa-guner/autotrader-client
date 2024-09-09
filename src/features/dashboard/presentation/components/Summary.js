@@ -14,7 +14,7 @@ import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 
 import { RiArrowUpSFill } from "react-icons/ri";
 
-export default function TotalSpentLayout(props) {
+export default function Summary(props) {
     const { ...rest } = props;
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const textColorSecondary = useColorModeValue("secondaryGray.600", "white");

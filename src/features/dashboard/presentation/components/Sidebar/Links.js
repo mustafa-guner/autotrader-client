@@ -1,10 +1,11 @@
 import {NavLink, useLocation} from "react-router-dom";
 import {Box, Flex, HStack, Icon, Text, useColorModeValue} from "@chakra-ui/react";
 import React from "react";
+import {dashboardLinks} from "../../../../../utils/constants";
 
 const links = [
     {
-        path: "/dashboard",
+        path: dashboardLinks.dashboard,
         name: "Dashboard",
         icon: <Icon />,
     }
@@ -27,7 +28,7 @@ function Links() {
     const generateLinks = () => {
         return links.map((link, index) => {
             return (
-                <NavLink key={index} to={link.layout + link.path}>
+                <NavLink key={index} to={link.path}>
                     {link.icon ? (
                         <Box>
                             <HStack

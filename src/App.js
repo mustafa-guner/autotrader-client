@@ -1,15 +1,18 @@
-import { useEffect } from "react";
+import {useEffect} from "react";
 import store from "./store";
-import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-dom";
+import {Route, BrowserRouter as Router, Routes, Navigate} from "react-router-dom";
 import LoginPage from "./features/auth/presentation/pages/LoginPage";
 import RegisterPage from "./features/auth/presentation/pages/RegisterPage";
 import DashboardPage from "./features/dashboard/presentation/pages/DashboardPage";
 import ForgotPasswordPage from "./features/auth/presentation/pages/ForgotPasswordPage";
 import ProtectedRoute from "./core/routes/ProtectedRoute";
+import PublicRoute from "./core/routes/PublicRoute";
 import {loadUser} from "./features/auth/presentation/redux/action";
+import {authLinks, dashboardLinks} from "./utils/constants";
 
+// Load user if token exists
 if (window.localStorage.getItem("token")) {
-    store.dispatch(loadUser())
+    store.dispatch(loadUser());
 }
 
 function App() {
@@ -20,23 +23,55 @@ function App() {
         }
     }, []);
 
+    const routesConfig = [
+        {
+            path: authLinks.login,
+            element: LoginPage,
+            isProtected: false,
+        },
+        {
+            path: authLinks.register,
+            element: RegisterPage,
+            isProtected: false,
+        },
+        {
+            path: authLinks.forgotPassword,
+            element: ForgotPasswordPage,
+            isProtected: false,
+        },
+        {
+            path: dashboardLinks.dashboard,
+            element: DashboardPage,
+            isProtected: true,
+        },
+    ];
+
     return (
         <Router>
-            <header></header>
             <Routes>
                 {/* Redirect root '/' to '/dashboard' */}
-                <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/" element={<Navigate to="/dashboard" replace/>}/>
 
-                <Route path="/auth">
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="register" element={<RegisterPage />} />
-                    <Route path="forgot-password" element={<ForgotPasswordPage />} />
-                </Route>
-
-                {/* Protected Dashboard Routes */}
-                <Route path="/dashboard" element={<ProtectedRoute />}>
-                    <Route index element={<DashboardPage />} />
-                </Route>
+                {/* Dynamically map routes */}
+                {routesConfig.map(({path, element: Component, isProtected}, index) => {
+                    return (
+                        <Route
+                            key={index}
+                            path={path}
+                            element={
+                                isProtected ? (
+                                    <ProtectedRoute>
+                                        <Component/>
+                                    </ProtectedRoute>
+                                ) : (
+                                    <PublicRoute>
+                                        <Component/>
+                                    </PublicRoute>
+                                )
+                            }
+                        />
+                    );
+                })}
             </Routes>
         </Router>
     );

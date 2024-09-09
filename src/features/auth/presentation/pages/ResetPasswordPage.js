@@ -17,6 +17,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
 import {resetPassword} from "../redux/action";
 import AlertMessage from "../../../common/presentation/components/AlertMessage";
+import {authLinks} from "../../../../utils/constants";
 
 function ResetPasswordPage({auth, resetPassword}) {
     const textColor = useColorModeValue("navy.700", "white");
@@ -33,7 +34,7 @@ function ResetPasswordPage({auth, resetPassword}) {
     useEffect(() => {
         //Prevent user from accessing the page if the password reset link has not been sent
         if (!auth.isPasswordResetLinkSent) {
-            navigate('/auth/forgot-password');
+            navigate(authLinks.forgotPassword);
         }
     }, [auth, navigate]);
 
@@ -152,7 +153,7 @@ function ResetPasswordPage({auth, resetPassword}) {
                     mt='0px'>
                     <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
                         Already have an account?
-                        <NavLink to='/auth/login'>
+                        <NavLink to={authLinks.login}>
                             <Text
                                 color={textColorBrand}
                                 as='span'

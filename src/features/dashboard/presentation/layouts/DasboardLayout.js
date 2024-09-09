@@ -1,16 +1,21 @@
-import React from 'react';
-import Sidebar from "../../../../App";
-import {Box} from "@chakra-ui/react";
+import React, {useState} from 'react';
+import {Box, Portal, useDisclosure} from "@chakra-ui/react";
+import SidebarLayout from "./SidebarLayout";
+import NavbarContent from "../components/Navbar/Content";
 
 function DashboardLayout({children}) {
+    const {onOpen} = useDisclosure();
+    const [fixed] = useState(false);
+
     return (
         <Box>
             <Box>
-                <Sidebar display='none'/>
+                <SidebarLayout display='none'/>
                 <Box
                     float='right'
                     minHeight='100vh'
                     height='100%'
+                    padding={'1rem'}
                     overflow='auto'
                     position='relative'
                     maxHeight='100%'
@@ -20,6 +25,15 @@ function DashboardLayout({children}) {
                     transitionDuration='.2s, .2s, .35s'
                     transitionProperty='top, bottom, width'
                     transitionTimingFunction='linear, linear, ease'>
+                    <Portal>
+                        <Box>
+                            <NavbarContent
+                                onOpen={onOpen}
+                                logoText={'Horizon UI Dashboard PRO'}
+                                fixed={fixed}
+                            />
+                        </Box>
+                    </Portal>
                     {children}
                 </Box>
             </Box>

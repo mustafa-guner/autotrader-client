@@ -21,6 +21,7 @@ import {connect} from "react-redux";
 import AlertMessage from "../../../common/presentation/components/AlertMessage";
 import AuthLayout from "../layouts/AuthLayout";
 import {login} from "../redux/action";
+import {authLinks, dashboardLinks} from "../../../../utils/constants";
 
 
 function LoginPage({auth, login}) {
@@ -46,7 +47,7 @@ function LoginPage({auth, login}) {
 
         login(formData).then(() => {
             setDisable(false)
-            navigate('/dashboard');
+            navigate(dashboardLinks.dashboard);
         }).catch(() => {
             setDisable(false);
         });
@@ -153,7 +154,7 @@ function LoginPage({auth, login}) {
                             </InputRightElement>
                         </InputGroup>
                         <Flex justifyContent='space-between' align='center' mb='24px'>
-                            <NavLink to='/auth/forgot-password'>
+                            <NavLink to={authLinks.forgotPassword}>
                                 <Text
                                     color={textColorBrand}
                                     fontSize='sm'
@@ -183,7 +184,7 @@ function LoginPage({auth, login}) {
                         mt='0px'>
                         <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
                             Not registered yet?
-                            <NavLink to='/auth/register'>
+                            <NavLink to={authLinks.register}>
                                 <Text
                                     color={textColorBrand}
                                     as='span'
