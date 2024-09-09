@@ -5,7 +5,8 @@ import ProtectedRoute from "./core/routes/ProtectedRoute";
 import PublicRoute from "./core/routes/PublicRoute";
 import {loadUser} from "./features/auth/presentation/redux/action";
 import {routes} from "./core/routes";
-console.log(routes)
+import {links} from "./utils/constants.js";
+import NotFoundPage from "./features/common/presentation/pages/errors/NotFoundPage";
 
 // Load user if token exists
 if (window.localStorage.getItem("token")) {
@@ -24,7 +25,7 @@ function App() {
         <Router>
             <Routes>
                 {/* Redirect root '/' to '/dashboard' */}
-                <Route path="/" element={<Navigate to="/dashboard" replace/>}/>
+                <Route path="/" element={<Navigate to={links.protected.dashboard} replace/>}/>
 
                 {/* Dynamically map routes */}
                 {routes.map(({path, element: Component, isProtected}, index) => {
@@ -46,6 +47,9 @@ function App() {
                         />
                     );
                 })}
+
+                {/* Catch-all route for 404 Not Found */}
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Router>
     );

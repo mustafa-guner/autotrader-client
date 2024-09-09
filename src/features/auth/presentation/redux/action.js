@@ -29,6 +29,7 @@ export const login = (formData) => async (dispatch) => {
         const {data} = await AuthService.login(formData);
         localStorage.setItem("token", data.data.token);
         dispatch({type: types.LOGIN_SUCCESS, payload: data.data});
+        dispatch(loadUser());
     } catch (error) {
         dispatch({type: types.LOGIN_ERROR, payload: [error.response.data.message]});
     }
