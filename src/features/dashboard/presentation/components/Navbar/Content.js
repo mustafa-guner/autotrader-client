@@ -69,7 +69,7 @@ function Content(props) {
                 xl: '12px'
             }}
             pt='8px'
-            top={{base: '12px', md: '16px', lg: '20px', xl: '20px'}}
+            top={{base: '5px'}}
             w={{
                 base: 'calc(100vw - 6%)',
                 md: 'calc(100vw - 8%)',
@@ -86,19 +86,6 @@ function Content(props) {
                 alignItems={{xl: 'center'}}
                 mb={gap}>
                 <Box mb={{sm: '8px', md: '0px'}}>
-                    <Breadcrumb>
-                        <BreadcrumbItem color={secondaryText} fontSize='sm' mb='5px'>
-                            <BreadcrumbLink href='#' color={secondaryText}>
-                                Pages
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-
-                        <BreadcrumbItem color={secondaryText} fontSize='sm' mb='5px'>
-                            <BreadcrumbLink href='#' color={secondaryText}>
-                                {brandText}
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                    </Breadcrumb>
                     <Link
                         color={mainText}
                         href='#'

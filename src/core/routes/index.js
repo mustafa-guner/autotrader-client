@@ -1,8 +1,11 @@
+//Pages
 import LoginPage from "../../features/auth/presentation/pages/LoginPage";
 import RegisterPage from "../../features/auth/presentation/pages/RegisterPage";
 import ForgotPasswordPage from "../../features/auth/presentation/pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../features/auth/presentation/pages/ResetPasswordPage";
 import DashboardPage from "../../features/dashboard/presentation/pages/DashboardPage";
+import ProfilePage from "../../features/profile/presentation/pages/ProfilePage";
+
 import {links} from "../../utils/constants";
 
 const publicLink = links.public;
@@ -37,11 +40,11 @@ const protectedRoutes = [
         element: DashboardPage,
         isProtected: true,
     },
-    // {
-    //     path: profile,
-    //     element: ProfilePage,
-    //     isProtected: true
-    // }
+    {
+        path: protectedLink.profile,
+        element: ProfilePage,
+        isProtected: true
+    }
 ]
 
 

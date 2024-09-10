@@ -15,7 +15,8 @@ function DashboardLayout({children}) {
                     float='right'
                     minHeight='100vh'
                     height='100%'
-                    padding={'1rem'}
+                    paddingX={'2.2rem'}
+                    paddingY={'1rem'}
                     overflow='auto'
                     position='relative'
                     maxHeight='100%'

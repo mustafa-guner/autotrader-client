@@ -19,7 +19,7 @@ import {SidebarResponsive} from "../../layouts/SidebarLayout";
 import {SearchBar} from "./Searchbar";
 import {logout} from '../../../../auth/presentation/redux/action';
 import {connect} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {links} from "../../../../../utils/constants";
 
 function Links(props) {
@@ -138,8 +138,8 @@ function Links(props) {
                         </Text>
                     </Flex>
                     <Flex flexDirection="column" p="10px">
-                        <MenuItem _hover={{bg: 'none'}} _focus={{bg: 'none'}} borderRadius="8px" px="14px">
-                            <Text fontSize="sm">Profile</Text>
+                        <MenuItem  _hover={{bg: 'none'}} _focus={{bg: 'none'}} borderRadius="8px" px="14px">
+                            <NavLink to={links.protected.profile}><Text fontSize="sm">Profile</Text></NavLink>
                         </MenuItem>
                         <MenuItem _hover={{bg: 'none'}} _focus={{bg: 'none'}} borderRadius="8px" px="14px">
                             <Text fontSize="sm">Settings</Text>
