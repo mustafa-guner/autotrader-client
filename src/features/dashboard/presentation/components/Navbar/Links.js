@@ -19,7 +19,7 @@ import {SidebarResponsive} from "../../layouts/SidebarLayout";
 import {SearchBar} from "./Searchbar";
 import {logout} from '../../../../auth/presentation/redux/action';
 import {connect} from "react-redux";
-import {NavLink, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {links} from "../../../../../utils/constants";
 import {IoMdMoon, IoMdSunny} from "react-icons/io";
 

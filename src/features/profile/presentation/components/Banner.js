@@ -2,7 +2,7 @@ import {Avatar, Box, Card, Flex, Text, useColorModeValue} from "@chakra-ui/react
 import React from "react";
 
 export default function Banner(props) {
-    const { banner, avatar, name, gender,country, posts, followers, following } = props;
+    const { banner, avatar, name,country, posts, followers, following } = props;
     // Chakra Color Mode
     const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
     const textColorSecondary = "gray.400";

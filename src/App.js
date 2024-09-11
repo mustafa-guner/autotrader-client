@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Spinner} from "@chakra-ui/react";
 
-function App({user, loadUser}) {
+function App({loadUser}) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -59,12 +59,7 @@ function App({user, loadUser}) {
 }
 
 App.propTypes = {
-    user: PropTypes.object,
     loadUser: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    user: state.auth.user,
-});
-
-export default connect(mapStateToProps, {loadUser})(App);
+export default connect(null, {loadUser})(App);

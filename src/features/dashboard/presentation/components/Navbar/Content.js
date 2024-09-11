@@ -17,7 +17,6 @@ function Content(props) {
     const {secondary, message, brandText} = props;
 
     let mainText = useColorModeValue('navy.700', 'white');
-    let secondaryText = useColorModeValue('gray.700', 'white');
     let navbarPosition = 'fixed';
     let navbarFilter = 'none';
     let navbarBackdrop = 'blur(20px)';
