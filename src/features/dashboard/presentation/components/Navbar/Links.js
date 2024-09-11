@@ -1,12 +1,12 @@
 import {
-    Avatar,
+    Avatar, Button,
     Flex,
     Icon,
     Menu,
     MenuButton,
     MenuItem,
     MenuList,
-    Text,
+    Text, useColorMode,
     useColorModeValue
 } from '@chakra-ui/react';
 
@@ -21,6 +21,7 @@ import {logout} from '../../../../auth/presentation/redux/action';
 import {connect} from "react-redux";
 import {NavLink, useNavigate} from "react-router-dom";
 import {links} from "../../../../../utils/constants";
+import {IoMdMoon, IoMdSunny} from "react-icons/io";
 
 function Links(props) {
     const {secondary, logout, auth} = props;
@@ -30,6 +31,8 @@ function Links(props) {
     const textColor = useColorModeValue('secondaryGray.900', 'white');
     const textColorBrand = useColorModeValue('brand.700', 'brand.400');
     const ethColor = useColorModeValue('gray.700', 'white');
+    const { colorMode, toggleColorMode } = useColorMode();
+
     const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 0.3)');
     const ethBg = useColorModeValue('secondaryGray.300', 'navy.900');
     const ethBox = useColorModeValue('white', 'navy.800');
@@ -110,12 +113,30 @@ function Links(props) {
                     </Flex>
                 </MenuList>
             </Menu>
+            <Button
+                variant="no-hover"
+                bg="transparent"
+                p="0px"
+                minW="unset"
+                minH="unset"
+                h="18px"
+                w="max-content"
+                onClick={toggleColorMode}
+            >
+                <Icon
+                    me="10px"
+                    h="18px"
+                    w="18px"
+                    color={navbarIcon}
+                    as={colorMode === 'light' ? IoMdMoon : IoMdSunny}
+                />
+            </Button>
             <Menu>
                 <MenuButton p="0px">
                     <Avatar
                         _hover={{cursor: 'pointer'}}
                         color="white"
-                        name={auth.user.firstname + ' ' + auth.user.lastname}
+                        name={auth.user.full_name}
                         bg="#11047A"
                         size="sm"
                         w="40px"
@@ -138,8 +159,9 @@ function Links(props) {
                         </Text>
                     </Flex>
                     <Flex flexDirection="column" p="10px">
-                        <MenuItem  _hover={{bg: 'none'}} _focus={{bg: 'none'}} borderRadius="8px" px="14px">
-                            <NavLink to={links.protected.profile}><Text fontSize="sm">Profile</Text></NavLink>
+                        <MenuItem onClick={() => navigate(links.protected.profile)} _hover={{bg: 'none'}}
+                                  _focus={{bg: 'none'}} borderRadius="8px" px="14px">
+                            <Text fontSize="sm">Profile</Text>
                         </MenuItem>
                         <MenuItem _hover={{bg: 'none'}} _focus={{bg: 'none'}} borderRadius="8px" px="14px">
                             <Text fontSize="sm">Settings</Text>

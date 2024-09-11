@@ -1,5 +1,4 @@
 import * as types from "./action_types";
-import {LOAD_PROFILE_FAILURE} from "./action_types";
 
 const initialState = {
     profile: null,
