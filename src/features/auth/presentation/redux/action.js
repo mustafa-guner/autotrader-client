@@ -17,9 +17,9 @@ export const register = (formData) => async (dispatch) => {
 
     try {
         const {data} = await AuthService.register(formData);
-        dispatch({type: types.REGISTER_SUCCESS, payload: data});
+        dispatch({type: types.REGISTER_SUCCESS, payload: [data.message]});
     } catch (error) {
-        dispatch({type: types.REGISTER_FAILURE, payload: errorParser(error.response.data.errors)});
+        dispatch({type: types.REGISTER_FAILURE, payload: errorParser(error.response.data)});
     }
 };
 
@@ -31,7 +31,7 @@ export const login = (formData) => async (dispatch) => {
         dispatch({type: types.LOGIN_SUCCESS, payload: data.data});
         dispatch(loadUser());
     } catch (error) {
-        dispatch({type: types.LOGIN_ERROR, payload: [error.response.data.message]});
+        dispatch({type: types.LOGIN_ERROR, payload: errorParser(error.response.data)});
     }
 };
 
@@ -52,7 +52,7 @@ export const forgotPassword = (formData) => async (dispatch) => {
         const {data} = await AuthService.forgotPassword(formData);
         dispatch({type: types.FORGOT_PASSWORD_SUCCESS, payload: data.data});
     } catch (error) {
-        dispatch({type: types.FORGOT_PASSWORD_FAILURE, payload: [error.response.data.message]});
+        dispatch({type: types.FORGOT_PASSWORD_FAILURE, payload: errorParser(error.response.data)});
     }
 };
 
@@ -62,6 +62,6 @@ export const resetPassword = (formData) => async (dispatch) => {
         const {data} = await AuthService.resetPassword(formData);
         dispatch({type: types.PASSWORD_RESET_SUCCESS, payload: data.data});
     } catch (error) {
-        dispatch({type: types.PASSWORD_RESET_FAILURE, payload: errorParser(error.response.data.errors)});
+        dispatch({type: types.PASSWORD_RESET_FAILURE, payload: errorParser(error.response.data)});
     }
 };

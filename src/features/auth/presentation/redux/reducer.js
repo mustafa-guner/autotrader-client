@@ -4,33 +4,17 @@ const initialState = {
     user: null,
     isAuth: false,
     isRegistered: false,
-    errors: {
-        registration: [],
-        login: [],
-        logout: [],
-        forgotPassword: [],
-        resetPassword: [],
-        loadUser: []
-    },
+    errors: [],
+    successMessages:[],
     isPasswordResetLinkSent: false,
     token: localStorage.getItem("token"),
-    loading: false
+    loading: true
 };
 
 const auth = (state = initialState, action) => {
     const {type, payload} = action;
 
     switch (type) {
-        // Loading States
-        case types.LOGIN_REQUEST:
-        case types.REGISTER_REQUEST:
-        case types.LOGOUT_REQUEST:
-        case types.FORGOT_PASSWORD_REQUEST:
-        case types.LOAD_USER_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            };
 
         case types.LOAD_USER_SUCCESS:
             return {
@@ -38,10 +22,7 @@ const auth = (state = initialState, action) => {
                 isAuth: true,
                 user: payload,
                 loading: false,
-                errors: {
-                    ...state.errors,
-                    loadUser: []
-                }
+                errors: []
             };
 
         case types.LOAD_USER_FAILURE:
@@ -50,10 +31,7 @@ const auth = (state = initialState, action) => {
                 isAuth: false,
                 user: null,
                 loading: false,
-                errors: {
-                    ...state.errors,
-                    loadUser: ['User account could not be loaded.']
-                }
+                errors: [...payload]
             };
         //----------------------------------------------------------
         case types.LOGIN_SUCCESS:
@@ -62,10 +40,7 @@ const auth = (state = initialState, action) => {
                 isAuth: true,
                 token: payload.token,
                 loading: false,
-                errors: {
-                    ...state.errors,
-                    login: []
-                }
+                errors: []
             };
 
         case types.LOGIN_ERROR:
@@ -75,10 +50,9 @@ const auth = (state = initialState, action) => {
                 user: null,
                 isAuth: false,
                 loading: false,
-                errors: {
-                    ...state.errors,
-                    login: payload
-                }
+                errors: [
+                    ...payload
+                ]
             };
         //----------------------------------------------------------
         case types.REGISTER_SUCCESS:
@@ -86,10 +60,8 @@ const auth = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 isRegistered: true,
-                errors: {
-                    ...state.errors,
-                    registration: []
-                }
+                errors: [],
+                successMessages: [...payload]
             };
 
         case types.REGISTER_FAILURE:
@@ -97,10 +69,7 @@ const auth = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 isRegistered: false,
-                errors: {
-                    ...state.errors,
-                    registration: payload
-                }
+                errors: [...payload]
             };
 
         case types.LOGOUT_SUCCESS:
@@ -110,20 +79,14 @@ const auth = (state = initialState, action) => {
                 isAuth: false,
                 token: null,
                 loading: false,
-                errors: {
-                    ...state.errors,
-                    login: []
-                }
+                errors: []
             };
 
         case types.LOGOUT_FAILURE:
             return {
                 ...state,
                 loading: false,
-                errors: {
-                    ...state.errors,
-                    login: ['Logout failed.']
-                }
+                errors: [...payload]
             };
 
         //----------------------------------------------------------
@@ -132,10 +95,7 @@ const auth = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 isPasswordResetLinkSent: true,
-                errors: {
-                    ...state.errors,
-                    forgotPassword: []
-                }
+                errors: []
             };
 
         case types.FORGOT_PASSWORD_FAILURE:
@@ -143,10 +103,7 @@ const auth = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 isPasswordResetLinkSent: false,
-                errors: {
-                    ...state.errors,
-                    forgotPassword: payload
-                }
+                errors: [...payload]
             }
 
         default:

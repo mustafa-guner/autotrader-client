@@ -1,14 +1,12 @@
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {Spinner} from "@chakra-ui/react";
 import {Navigate} from "react-router-dom";
 import {links} from "../../utils/constants";
 
 
-const PublicRoute = ({children, auth: {loading, isAuth}}) => {
-    if (loading) {
-        return <Spinner/>;
-    } else if (isAuth) {
+const PublicRoute = ({children, auth: { isAuth}}) => {
+
+    if (isAuth) {
         return <Navigate to={links.protected.dashboard} replace/>;
     }
 

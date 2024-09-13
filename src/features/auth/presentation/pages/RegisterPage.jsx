@@ -10,7 +10,6 @@ import {
     FormControl,
     FormLabel,
     Grid,
-    Heading,
     Icon,
     Input,
     InputGroup,
@@ -24,7 +23,6 @@ import {RiEyeCloseLine} from "react-icons/ri";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import AuthLayout from "../layouts/AuthLayout";
-import AlertMessage from "../../../common/presentation/components/AlertMessage";
 import PublicService from "../../../common/data/public_service";
 import {register} from "../redux/action";
 import {links} from "../../../../utils/constants";
@@ -76,36 +74,7 @@ function RegisterPage({auth, register}) {
     const handleClick = () => setShow(!show);
 
     return (
-        <AuthLayout>
-            <Flex
-                me='auto'
-                alignItems='start'
-                w={{base: "100%", md: "420px"}}
-                justifyContent='center'
-                mt={{base: "10px", md: "12vh"}}
-                flexDirection='column'>
-                <Box me='auto'>
-                    <Heading color={textColor} fontSize='36px' mb='10px'>
-                        Sign Up
-                    </Heading>
-                    <Text
-                        mb='36px'
-                        ms='4px'
-                        color={textColorSecondary}
-                        fontWeight='400'
-                        fontSize='md'>
-                        Create your account by filling in the details below.
-                    </Text>
-                    {auth.isRegistered && (
-                        <AlertMessage status={'success'} title={'Success!'}
-                                      message={'Please check your email to verify your account.'}/>
-                    )}
-                    {auth.errors.registration.length > 0 && auth.errors.registration.map((errorMessage) => {
-                        return (
-                            <AlertMessage status={'error'} title={'Failed!'} message={errorMessage}/>
-                        );
-                    })}
-                </Box>
+        <AuthLayout heading={'Sign Up'} description={'Create your account by filling in the details below.'} auth={auth}>
                 <Flex
                     zIndex='2'
                     direction='column'
@@ -349,7 +318,6 @@ function RegisterPage({auth, register}) {
                         </Text>
                     </Flex>
                 </Flex>
-            </Flex>
         </AuthLayout>
     );
 }

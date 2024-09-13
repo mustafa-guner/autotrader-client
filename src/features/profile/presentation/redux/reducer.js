@@ -5,19 +5,13 @@ const initialState = {
     errors: {
         profile: {}
     },
-    loading: false
+    loading: true
 };
 
 const profile = (state = initialState, action) => {
     const {type, payload} = action;
 
     switch (type) {
-        // Loading States
-        case types.LOAD_PROFILE_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            };
 
         case types.LOAD_PROFILE_SUCCESS:
             return {
