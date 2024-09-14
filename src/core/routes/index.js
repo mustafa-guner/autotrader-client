@@ -5,8 +5,10 @@ import ForgotPasswordPage from "../../features/auth/presentation/pages/ForgotPas
 import ResetPasswordPage from "../../features/auth/presentation/pages/ResetPasswordPage";
 import DashboardPage from "../../features/dashboard/presentation/pages/DashboardPage";
 import ProfilePage from "../../features/profile/presentation/pages/ProfilePage";
+import SharesPage from "../../features/shares/presentation/pages/SharesPage";
 
 import {links} from "../../utils/constants";
+
 
 const publicLink = links.public;
 const protectedLink = links.protected;
@@ -43,6 +45,11 @@ const protectedRoutes = [
     {
         path: protectedLink.profile,
         element: ProfilePage,
+        isProtected: true
+    },
+    {
+        path: protectedLink.shares,
+        element: SharesPage,
         isProtected: true
     }
 ]

@@ -138,7 +138,7 @@ export default function Share(props) {
                                 borderRadius='70px'
                                 px='24px'
                                 py='5px'>
-                                Place Bid
+                                Buy
                             </Button>
                         </Link>
                     </Flex>

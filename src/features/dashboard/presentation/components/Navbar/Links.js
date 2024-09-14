@@ -1,27 +1,18 @@
 import {
-    Avatar, Button,
-    Flex,
-    Icon,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    Text, useColorMode,
-    useColorModeValue
+    Avatar, Button, Flex, Icon, Menu, MenuButton, MenuItem, MenuList,
+    Text, useColorMode, useColorModeValue, Spinner
 } from '@chakra-ui/react';
-
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import {MdNotificationsNone} from 'react-icons/md';
 import {FaEthereum} from 'react-icons/fa';
 import {SidebarResponsive} from "../../layouts/SidebarLayout";
-import {SearchBar} from "./Searchbar";
 import {logout} from '../../../../auth/presentation/redux/action';
 import {connect} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {links} from "../../../../../utils/constants";
 import {IoMdMoon, IoMdSunny} from "react-icons/io";
+import {SearchBar} from "./Searchbar";
 
 function Links(props) {
     const {secondary, logout, auth} = props;
@@ -43,11 +34,7 @@ function Links(props) {
 
     const handleLogout = (e) => {
         e.preventDefault();
-        return logout().then(() => {
-            navigate(links.public.auth.login);
-        }).catch(() => {
-            console.log('Logout Error.')
-        });
+        return logout().finally(() => navigate(links.public.auth.login));
     }
 
     return (
@@ -55,12 +42,11 @@ function Links(props) {
             w={{sm: '100%', md: 'auto'}}
             alignItems="center"
             flexDirection="row"
-            bg={menuBg}
+            justifyContent="end"
             flexWrap={secondary ? {base: 'wrap', md: 'nowrap'} : 'unset'}
             p="10px"
-            borderRadius="30px"
-            boxShadow={shadow}>
-            <SearchBar mb={secondary ? {base: '10px', md: 'unset'} : 'unset'} me="10px" borderRadius="30px"/>
+            borderRadius="30px">
+            {/*<SearchBar mb={secondary ? {base: '10px', md: 'unset'} : 'unset'} me="10px" borderRadius="30px"/>*/}
             <Flex
                 bg={ethBg}
                 display={secondary ? 'flex' : 'none'}
@@ -95,7 +81,7 @@ function Links(props) {
                     me={{base: '30px', md: 'unset'}}
                     minW={{base: 'unset', md: '400px', xl: '450px'}}
                     maxW={{base: '360px', md: 'unset'}}>
-                    <Flex jusitfy="space-between" w="100%" mb="20px">
+                    <Flex justify="space-between" w="100%" mb="20px">
                         <Text fontSize="md" fontWeight="600" color={textColor}>
                             Notifications
                         </Text>
@@ -136,12 +122,14 @@ function Links(props) {
                     <Avatar
                         _hover={{cursor: 'pointer'}}
                         color="white"
-                        name={auth.user.full_name}
+                        name={auth.user ? auth.user.full_name : ''}
                         bg="#11047A"
                         size="sm"
                         w="40px"
                         h="40px"
-                    />
+                    >
+                        {!auth.user && <Spinner size="sm" />}
+                    </Avatar>
                 </MenuButton>
                 <MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none">
                     <Flex w="100%" mb="0px">
@@ -155,7 +143,7 @@ function Links(props) {
                             fontSize="sm"
                             fontWeight="700"
                             color={textColor}>
-                            👋&nbsp; Hey, {auth.user.firstname}
+                            👋&nbsp; Hey, {auth.user?.firstname || 'loading...'}
                         </Text>
                     </Flex>
                     <Flex flexDirection="column" p="10px">

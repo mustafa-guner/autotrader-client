@@ -1,25 +1,31 @@
 import {useNavigate} from "react-router-dom";
-import {Button} from "@chakra-ui/react";
+import {Box, Button, useColorMode} from "@chakra-ui/react";
+
+import NotFoundImageDark from "../../../../../assets/img/errors/404-error-dark.png";
+import NotFoundImageLight from "../../../../../assets/img/errors/404-error-dark.png";
 
 function NotFoundPage() {
-
     const navigate = useNavigate();
+    const {colorMode} = useColorMode();
 
     const handleGoBack = () => {
         navigate(-1); //means go back to previous page stack
     }
 
     return (
-        <div>
-            <center>
-                <h1>
-                    404-Not Found
-                </h1>
-                <Button onClick={handleGoBack}>
-                    Go Back
-                </Button>
-            </center>
-        </div>
+        <Box
+            width="100vw"
+            backgroundColor={colorMode === 'light' ? '#dfe7f5' : '#0B1437'}
+            height="100vh"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center">
+            {<img src={colorMode === 'light' ? NotFoundImageLight : NotFoundImageDark} alt="404 Not Found"/>}
+            <Button onClick={handleGoBack}>
+                Go Back
+            </Button>
+        </Box>
     )
 }
 

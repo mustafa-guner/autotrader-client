@@ -200,3 +200,11 @@ body.chakra-ui-dark .react-calendar__tile--rangeEnd:enabled:focus {
   background: #7551ff;
   color: white;
 }
+
+.chakra-menu__menuitem{
+  background: transparent !important;
+}
+
+.chakra-menu__menuitem:hover{
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
