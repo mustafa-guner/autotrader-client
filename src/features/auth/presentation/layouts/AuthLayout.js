@@ -1,27 +1,37 @@
 import {Box, Flex, Heading, Text, useColorModeValue} from "@chakra-ui/react";
-import React from "react";
+import React, {useEffect} from "react";
 import AlertMessage from "../../../common/presentation/components/AlertMessage";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {clearErrors, clearMessages} from "../redux/action";
 
 function AuthLayout(props) {
-    const {children, heading, description, auth} = props
+    const {children, heading, description, auth, clearErrors, clearMessages} = props;
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
 
+    useEffect(() => {
+        const errorTimeout = setTimeout(() => {
+            clearErrors();
+            clearMessages();
+        }, 3000);
+
+        return () => clearTimeout(errorTimeout);
+    }, [auth.errors, auth.successMessages, clearErrors, clearMessages]);
+
     const errorMessages = () => {
-        return auth.errors.map((errorMessage) => {
+        return auth.errors.map((errorMessage, index) => {
             return (
-                <AlertMessage status={'error'} title={'Failed!'} message={errorMessage}/>
+                <AlertMessage key={index} status={'error'} title={'Failed!'} message={errorMessage}/>
             );
-        })
-    }
+        });
+    };
 
     const successMessages = () => {
-        return auth.successMessages.map((message) => {
-            return <AlertMessage status={'success'} title={'Success!'} message={message}/>
-        })
-    }
+        return auth.successMessages.map((message, index) => {
+            return <AlertMessage key={index} status={'success'} title={'Success!'} message={message}/>;
+        });
+    };
 
     return (
         <Flex>
@@ -58,10 +68,11 @@ function AuthLayout(props) {
 
 AuthLayout.propTypes = {
     auth: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(AuthLayout);
+export default connect(mapStateToProps, {clearErrors, clearMessages})(AuthLayout);

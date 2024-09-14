@@ -5,8 +5,9 @@ const initialState = {
     isAuth: false,
     isRegistered: false,
     errors: [],
-    successMessages:[],
+    successMessages: [],
     isPasswordResetLinkSent: false,
+    passwordResetEmail: null,
     token: localStorage.getItem("token"),
     loading: true
 };
@@ -95,7 +96,26 @@ const auth = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 isPasswordResetLinkSent: true,
+                passwordResetEmail: payload.email,
+                successMessages: [payload.message],
                 errors: []
+            };
+
+        case types.PASSWORD_RESET_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isPasswordResetLinkSent: false,
+                successMessages: [payload.message],
+                errors: []
+            };
+
+        case types.PASSWORD_RESET_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                isPasswordResetLinkSent: false,
+                errors: [...payload]
             };
 
         case types.FORGOT_PASSWORD_FAILURE:
@@ -105,6 +125,18 @@ const auth = (state = initialState, action) => {
                 isPasswordResetLinkSent: false,
                 errors: [...payload]
             }
+
+        case types.CLEAR_AUTH_ERRORS:
+            return {
+                ...state,
+                errors: []
+            };
+
+        case types.CLEAR_AUTH_MESSAGES:
+            return {
+                ...state,
+                successMessages: []
+            };
 
         default:
             return state;

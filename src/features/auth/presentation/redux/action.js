@@ -3,7 +3,6 @@ import errorParser from "../../../../utils/helpers";
 import AuthService from "../../data/auth_service";
 
 export const loadUser = () => async (dispatch) => {
-    dispatch({type: types.LOAD_USER_REQUEST});
     try {
         const {data} = await AuthService.loadUser();
         dispatch({type: types.LOAD_USER_SUCCESS, payload: data.data});
@@ -13,8 +12,6 @@ export const loadUser = () => async (dispatch) => {
 };
 
 export const register = (formData) => async (dispatch) => {
-    dispatch({type: types.REGISTER_REQUEST});
-
     try {
         const {data} = await AuthService.register(formData);
         dispatch({type: types.REGISTER_SUCCESS, payload: [data.message]});
@@ -24,7 +21,6 @@ export const register = (formData) => async (dispatch) => {
 };
 
 export const login = (formData) => async (dispatch) => {
-    dispatch({type: types.LOGIN_REQUEST});
     try {
         const {data} = await AuthService.login(formData);
         localStorage.setItem("token", data.data.token);
@@ -36,7 +32,6 @@ export const login = (formData) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-    dispatch({type: types.LOGOUT_REQUEST});
     try {
         await AuthService.logout();
         localStorage.removeItem("token");
@@ -47,21 +42,30 @@ export const logout = () => async (dispatch) => {
 }
 
 export const forgotPassword = (formData) => async (dispatch) => {
-    dispatch({type: types.FORGOT_PASSWORD_REQUEST});
     try {
-        const {data} = await AuthService.forgotPassword(formData);
-        dispatch({type: types.FORGOT_PASSWORD_SUCCESS, payload: data.data});
+        let email = formData.email;
+        let {data} = await AuthService.forgotPassword(formData);
+        data = {message: data.message, email: email}
+        dispatch({type: types.FORGOT_PASSWORD_SUCCESS, payload: data});
     } catch (error) {
-        dispatch({type: types.FORGOT_PASSWORD_FAILURE, payload: errorParser(error.response.data)});
+        dispatch({type: types.FORGOT_PASSWORD_FAILURE, payload: ['error']});
     }
 };
 
 export const resetPassword = (formData) => async (dispatch) => {
-    dispatch({type: types.PASSWORD_RESET_REQUEST});
     try {
-        const {data} = await AuthService.resetPassword(formData);
-        dispatch({type: types.PASSWORD_RESET_SUCCESS, payload: data.data});
+        let {data} = await AuthService.resetPassword(formData);
+        data = {message: data.message}
+        dispatch({type: types.PASSWORD_RESET_SUCCESS, payload: data});
     } catch (error) {
         dispatch({type: types.PASSWORD_RESET_FAILURE, payload: errorParser(error.response.data)});
     }
 };
+
+export const clearErrors = () => async (dispatch) => {
+    dispatch({type: types.CLEAR_AUTH_ERRORS});
+}
+
+export const clearMessages = () => async (dispatch) => {
+    dispatch({type: types.CLEAR_AUTH_MESSAGES});
+}
