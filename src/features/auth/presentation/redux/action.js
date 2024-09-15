@@ -1,5 +1,5 @@
 import * as types from "./action_types";
-import errorParser from "../../../../utils/helpers";
+import {errorParser} from "../../../../utils/helpers";
 import AuthService from "../../data/auth_service";
 
 export const loadUser = () => async (dispatch) => {

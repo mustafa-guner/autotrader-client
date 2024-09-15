@@ -1,10 +1,10 @@
-import {Avatar, Box, Flex, Text, useColorModeValue} from "@chakra-ui/react";
+import {Avatar, Box, Text, useColorModeValue} from "@chakra-ui/react";
 import React from "react";
 import CardLayout from "../../../common/presentation/layouts/CardLayout";
 
 export default function Banner(props) {
-    const { banner, avatar, name,country, posts, followers, following } = props;
-    // Chakra Color Mode
+    const {banner, name, email} = props;
+
     const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
     const textColorSecondary = "gray.400";
     const borderColor = useColorModeValue(
@@ -12,7 +12,7 @@ export default function Banner(props) {
         "#111C44 !important"
     );
     return (
-        <CardLayout mb={{ base: "0px", lg: "20px" }} align='center'>
+        <CardLayout mb={{base: "0px", lg: "20px"}} align='center'>
             <Box
                 bg={`url(${banner})`}
                 bgSize='cover'
@@ -22,7 +22,9 @@ export default function Banner(props) {
             />
             <Avatar
                 mx='auto'
-                src={avatar}
+                color="white"
+                name={name}
+                bg="#11047A"
                 h='87px'
                 w='87px'
                 mt='-43px'
@@ -33,34 +35,8 @@ export default function Banner(props) {
                 {name}
             </Text>
             <Text color={textColorSecondary} fontSize='sm'>
-                {country}
+                {email}
             </Text>
-            <Flex w='max-content' mx='auto' mt='26px'>
-                <Flex mx='auto' me='60px' align='center' direction='column'>
-                    <Text color={textColorPrimary} fontSize='2xl' fontWeight='700'>
-                        {posts}
-                    </Text>
-                    <Text color={textColorSecondary} fontSize='sm' fontWeight='400'>
-                        Posts
-                    </Text>
-                </Flex>
-                <Flex mx='auto' me='60px' align='center' direction='column'>
-                    <Text color={textColorPrimary} fontSize='2xl' fontWeight='700'>
-                        {followers}
-                    </Text>
-                    <Text color={textColorSecondary} fontSize='sm' fontWeight='400'>
-                        Followers
-                    </Text>
-                </Flex>
-                <Flex mx='auto' align='center' direction='column'>
-                    <Text color={textColorPrimary} fontSize='2xl' fontWeight='700'>
-                        {following}
-                    </Text>
-                    <Text color={textColorSecondary} fontSize='sm' fontWeight='400'>
-                        Following
-                    </Text>
-                </Flex>
-            </Flex>
         </CardLayout>
     );
 }

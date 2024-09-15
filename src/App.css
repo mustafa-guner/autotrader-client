@@ -208,3 +208,7 @@ body.chakra-ui-dark .react-calendar__tile--rangeEnd:enabled:focus {
 .chakra-menu__menuitem:hover{
   background-color: rgba(255, 255, 255, 0.1) !important;
 }
+
+.fw-bold {
+    font-weight: 700;
+}

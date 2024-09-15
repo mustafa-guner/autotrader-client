@@ -1,65 +1,48 @@
-import { SimpleGrid, Text, useColorModeValue} from "@chakra-ui/react";
+import {SimpleGrid, Text, useColorModeValue} from "@chakra-ui/react";
 import React from "react";
 import Information from "./Information";
 import CardLayout from "../../../common/presentation/layouts/CardLayout";
 
-// Assets
 export default function GeneralInformation(props) {
-    const { ...rest } = props;
-    // Chakra Color Mode
+    const {dob,gender,country,member_since} = props;
     const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
-    const textColorSecondary = "gray.400";
     const cardShadow = useColorModeValue(
         "0px 18px 40px rgba(112, 144, 176, 0.12)",
         "unset"
     );
     return (
-        <CardLayout mb={{ base: "0px", "2xl": "20px" }} {...rest}>
+        <CardLayout mb={{base: "0px", "2xl": "20px"}}
+                    gridArea={{base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3"}}
+                    minH="365px"
+                    pe="20px">
             <Text
                 color={textColorPrimary}
                 fontWeight='bold'
                 fontSize='2xl'
                 mt='10px'
                 mb='4px'>
-                General Information
-            </Text>
-            <Text color={textColorSecondary} fontSize='md' me='26px' mb='40px'>
-                As we live, our hearts turn colder. Cause pain is what we go through as
-                we become older. We get insulted by others, lose trust for those others.
-                We get back stabbed by friends. It becomes harder for us to give others
-                a hand. We get our heart broken by people we love, even that we give
-                them all...
+                Profile Information
             </Text>
             <SimpleGrid columns='2' gap='20px'>
                 <Information
                     boxShadow={cardShadow}
-                    title='Education'
-                    value='Stanford University'
-                />
-                <Information
-                    boxShadow={cardShadow}
-                    title='Languages'
-                    value='English, Spanish, Italian'
-                />
-                <Information
-                    boxShadow={cardShadow}
-                    title='Department'
-                    value='Product Design'
-                />
-                <Information
-                    boxShadow={cardShadow}
-                    title='Work History'
-                    value='Google, Facebook'
-                />
-                <Information
-                    boxShadow={cardShadow}
-                    title='Organization'
-                    value='Simmmple Web LLC'
-                />
-                <Information
-                    boxShadow={cardShadow}
                     title='Birthday'
-                    value='20 July 1986'
+                    value={dob}
+                />
+                <Information
+                    boxShadow={cardShadow}
+                    title='Gender'
+                    value={gender}
+                />
+                <Information
+                    boxShadow={cardShadow}
+                    title='Member Since'
+                    value={member_since}
+                />
+                <Information
+                    boxShadow={cardShadow}
+                    title='Country'
+                    value={country}
                 />
             </SimpleGrid>
         </CardLayout>

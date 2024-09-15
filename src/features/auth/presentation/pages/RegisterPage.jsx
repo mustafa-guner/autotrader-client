@@ -40,7 +40,7 @@ function RegisterPage({auth, register}) {
     const [genders, setGenders] = useState([]);
 
     const [formData, setFormData] = useState({});
-    const {firstname, lastname, email, password, password_confirmation, country_id, gender_id} = formData;
+    const {firstname, lastname, email, password, password_confirmation, country_id, gender_id,dob} = formData;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -64,260 +64,272 @@ function RegisterPage({auth, register}) {
         e.preventDefault();
         setDisable(true);
 
-        register(formData).then(() => {
-            setDisable(false);
-        }).catch((error) => {
-            setDisable(false);
-        });
+        register(formData).finally(()=>setDisable(false));
     }
 
     const handleClick = () => setShow(!show);
 
     return (
-        <AuthLayout heading={'Sign Up'} description={'Create your account by filling in the details below.'} auth={auth}>
-                <Flex
-                    zIndex='2'
-                    direction='column'
-                    w={{base: "100%", md: "420px"}}
-                    maxW='100%'
-                    background='transparent'
-                    borderRadius='15px'
-                    mx={{base: "auto", lg: "unset"}}
-                    me='auto'
-                    mb={{base: "20px", md: "auto"}}>
-                    <FormControl as='form' onSubmit={handleSubmit}>
-                        <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap='24px'>
-                            <Box>
-                                <FormLabel
-                                    display='flex'
-                                    ms='4px'
-                                    fontSize='sm'
-                                    fontWeight='500'
-                                    color={textColor}
-                                    mb='8px'>
-                                    First Name<Text color={brandStars}>*</Text>
-                                </FormLabel>
-                                <Input
-                                    name='firstname'
-                                    value={firstname}
-                                    disabled={disable}
-                                    isRequired
-                                    variant='auth'
-                                    fontSize='sm'
-                                    type='text'
-                                    placeholder='John'
-                                    mb='24px'
-                                    fontWeight='500'
-                                    size='lg'
-                                    onChange={handleChange}
-                                />
-                            </Box>
-                            <Box>
-                                <FormLabel
-                                    display='flex'
-                                    ms='4px'
-                                    fontSize='sm'
-                                    fontWeight='500'
-                                    color={textColor}
-                                    mb='8px'>
-                                    Last Name<Text color={brandStars}>*</Text>
-                                </FormLabel>
-                                <Input
-                                    name='lastname'
-                                    value={lastname}
-                                    disabled={disable}
-                                    isRequired
-                                    variant='auth'
-                                    fontSize='sm'
-                                    type='text'
-                                    placeholder='Doe'
-                                    mb='24px'
-                                    fontWeight='500'
-                                    size='lg'
-                                    onChange={handleChange}
-                                />
-                            </Box>
-                        </Grid>
-                        <FormLabel
-                            display='flex'
-                            ms='4px'
-                            fontSize='sm'
-                            fontWeight='500'
-                            color={textColor}
-                            mb='8px'>
-                            Email<Text color={brandStars}>*</Text>
-                        </FormLabel>
+        <AuthLayout heading={'Sign Up'} description={'Create your account by filling in the details below.'}
+                    auth={auth}>
+            <Flex
+                zIndex='2'
+                direction='column'
+                w={{base: "100%", md: "420px"}}
+                maxW='100%'
+                background='transparent'
+                borderRadius='15px'
+                mx={{base: "auto", lg: "unset"}}
+                me='auto'
+                mb={{base: "20px", md: "auto"}}>
+                <FormControl as='form' onSubmit={handleSubmit}>
+                    <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap='24px'>
+                        <Box>
+                            <FormLabel
+                                display='flex'
+                                ms='4px'
+                                fontSize='sm'
+                                fontWeight='500'
+                                color={textColor}
+                                mb='8px'>
+                                First Name<Text color={brandStars}>*</Text>
+                            </FormLabel>
+                            <Input
+                                name='firstname'
+                                value={firstname}
+                                disabled={disable}
+                                isRequired
+                                variant='auth'
+                                fontSize='sm'
+                                type='text'
+                                placeholder='John'
+                                mb='24px'
+                                fontWeight='500'
+                                size='lg'
+                                onChange={handleChange}
+                            />
+                        </Box>
+                        <Box>
+                            <FormLabel
+                                display='flex'
+                                ms='4px'
+                                fontSize='sm'
+                                fontWeight='500'
+                                color={textColor}
+                                mb='8px'>
+                                Last Name<Text color={brandStars}>*</Text>
+                            </FormLabel>
+                            <Input
+                                name='lastname'
+                                value={lastname}
+                                disabled={disable}
+                                isRequired
+                                variant='auth'
+                                fontSize='sm'
+                                type='text'
+                                placeholder='Doe'
+                                mb='24px'
+                                fontWeight='500'
+                                size='lg'
+                                onChange={handleChange}
+                            />
+                        </Box>
+                    </Grid>
+                    <FormLabel
+                        display='flex'
+                        ms='4px'
+                        fontSize='sm'
+                        fontWeight='500'
+                        color={textColor}
+                        mb='8px'>
+                        Email<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    <Input
+                        name='email'
+                        value={email}
+                        disabled={disable}
+                        isRequired
+                        variant='auth'
+                        fontSize='sm'
+                        type='email'
+                        placeholder='mail@simmmple.com'
+                        mb='24px'
+                        fontWeight='500'
+                        size='lg'
+                        onChange={handleChange}
+                    />
+                    <FormLabel
+                        display='flex'
+                        ms='4px'
+                        fontSize='sm'
+                        fontWeight='500'
+                        color={textColor}
+                        mb='8px'>
+                        Date Of Birth<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    <Input
+                        name='dob'
+                        value={dob}
+                        disabled={disable}
+                        isRequired
+                        variant='auth'
+                        fontSize='sm'
+                        type='date'
+                        mb='24px'
+                        fontWeight='500'
+                        size='lg'
+                        onChange={handleChange}
+                    />
+                    <FormLabel
+                        ms='4px'
+                        fontSize='sm'
+                        fontWeight='500'
+                        color={textColor}
+                        display='flex'>
+                        Password<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    <InputGroup size='md'>
                         <Input
-                            name='email'
-                            value={email}
+                            name='password'
+                            value={password}
                             disabled={disable}
                             isRequired
-                            variant='auth'
                             fontSize='sm'
-                            type='email'
-                            placeholder='mail@simmmple.com'
+                            placeholder='Min. 8 characters'
                             mb='24px'
-                            fontWeight='500'
                             size='lg'
+                            type={show ? "text" : "password"}
+                            variant='auth'
                             onChange={handleChange}
                         />
-                        <FormLabel
-                            ms='4px'
-                            fontSize='sm'
-                            fontWeight='500'
-                            color={textColor}
-                            display='flex'>
-                            Password<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <InputGroup size='md'>
-                            <Input
-                                name='password'
-                                value={password}
-                                disabled={disable}
-                                isRequired
-                                fontSize='sm'
-                                placeholder='Min. 8 characters'
-                                mb='24px'
-                                size='lg'
-                                type={show ? "text" : "password"}
-                                variant='auth'
-                                onChange={handleChange}
+                        <InputRightElement display='flex' alignItems='center' mt='4px'>
+                            <Icon
+                                color={textColorSecondary}
+                                _hover={{cursor: "pointer"}}
+                                as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                                onClick={handleClick}
                             />
-                            <InputRightElement display='flex' alignItems='center' mt='4px'>
-                                <Icon
-                                    color={textColorSecondary}
-                                    _hover={{cursor: "pointer"}}
-                                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                                    onClick={handleClick}
-                                />
-                            </InputRightElement>
-                        </InputGroup>
-                        <FormLabel
-                            ms='4px'
+                        </InputRightElement>
+                    </InputGroup>
+                    <FormLabel
+                        ms='4px'
+                        fontSize='sm'
+                        fontWeight='500'
+                        color={textColor}
+                        display='flex'>
+                        Password Confirmation<Text color={brandStars}>*</Text>
+                    </FormLabel>
+                    <InputGroup size='md'>
+                        <Input
+                            name='password_confirmation'
+                            value={password_confirmation}
+                            disabled={disable}
+                            isRequired
                             fontSize='sm'
-                            fontWeight='500'
-                            color={textColor}
-                            display='flex'>
-                            Password Confirmation<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <InputGroup size='md'>
-                            <Input
-                                name='password_confirmation'
-                                value={password_confirmation}
-                                disabled={disable}
-                                isRequired
-                                fontSize='sm'
-                                placeholder='Min. 8 characters'
-                                mb='24px'
-                                size='lg'
-                                type={show ? "text" : "password"}
-                                variant='auth'
-                                onChange={handleChange}
-                            />
-                            <InputRightElement display='flex' alignItems='center' mt='4px'>
-                                <Icon
-                                    color={textColorSecondary}
-                                    _hover={{cursor: "pointer"}}
-                                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                                    onClick={handleClick}
-                                />
-                            </InputRightElement>
-                        </InputGroup>
-                        <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap='24px'>
-                            <Box>
-                                <FormLabel
-                                    display='flex'
-                                    ms='4px'
-                                    fontSize='sm'
-                                    fontWeight='500'
-                                    color={textColor}
-                                    mb='8px'>
-                                    Country<Text color={brandStars}>*</Text>
-                                </FormLabel>
-                                <Select
-                                    name='country_id'
-                                    value={country_id}
-                                    disabled={disable}
-                                    placeholder='Please Select'
-                                    onChange={handleChange}
-                                    fontSize='sm'
-                                    variant='auth'
-                                    size='lg'
-                                    mb='24px'>
-                                    {countries.map(country => (
-                                        <option key={country.id} value={country.id}>
-                                            {country.name}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </Box>
-                            <Box>
-                                <FormLabel
-                                    display='flex'
-                                    ms='4px'
-                                    fontSize='sm'
-                                    fontWeight='500'
-                                    color={textColor}
-                                    mb='8px'>
-                                    Gender<Text color={brandStars}>*</Text>
-                                </FormLabel>
-                                <Select
-                                    name='gender_id'
-                                    value={gender_id}
-                                    disabled={disable}
-                                    placeholder='Please Select'
-                                    onChange={handleChange}
-                                    fontSize='sm'
-                                    variant='auth'
-                                    size='lg'
-                                    mb='24px'>
-                                    {genders.map(gender => (
-                                        <option key={gender.id} value={gender.id}>
-                                            {gender.definition}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </Box>
-                        </Grid>
-                        <Button
-                            type='submit'
-                            fontSize='sm'
-                            variant='brand'
-                            fontWeight='500'
-                            w='100%'
-                            h='50'
+                            placeholder='Min. 8 characters'
                             mb='24px'
-                            isDisabled={disable}>
-                            Sign Up
-                            {
-                                auth.loading && (
-                                    <Spinner>
-                                        <Icon as={RiEyeCloseLine} w='20px' h='20px' color='inherit'/>
-                                    </Spinner>
-                                )
-                            }
-                        </Button>
-                    </FormControl>
-                    <Flex
-                        flexDirection='column'
-                        justifyContent='center'
-                        alignItems='start'
-                        maxW='100%'
-                        mt='0px'>
-                        <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-                            Already have an account?
-                            <NavLink to={links.public.auth.login}>
-                                <Text
-                                    color={textColorBrand}
-                                    as='span'
-                                    ms='5px'
-                                    fontWeight='500'>
-                                    Sign In
-                                </Text>
-                            </NavLink>
-                        </Text>
-                    </Flex>
+                            size='lg'
+                            type={show ? "text" : "password"}
+                            variant='auth'
+                            onChange={handleChange}
+                        />
+                        <InputRightElement display='flex' alignItems='center' mt='4px'>
+                            <Icon
+                                color={textColorSecondary}
+                                _hover={{cursor: "pointer"}}
+                                as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                                onClick={handleClick}
+                            />
+                        </InputRightElement>
+                    </InputGroup>
+                    <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap='24px'>
+                        <Box>
+                            <FormLabel
+                                display='flex'
+                                ms='4px'
+                                fontSize='sm'
+                                fontWeight='500'
+                                color={textColor}
+                                mb='8px'>
+                                Country<Text color={brandStars}>*</Text>
+                            </FormLabel>
+                            <Select
+                                name='country_id'
+                                value={country_id}
+                                disabled={disable}
+                                placeholder='Please Select'
+                                onChange={handleChange}
+                                fontSize='sm'
+                                variant='auth'
+                                size='lg'
+                                mb='24px'>
+                                {countries.map(country => (
+                                    <option key={country.id} value={country.id}>
+                                        {country.name}
+                                    </option>
+                                ))}
+                            </Select>
+                        </Box>
+                        <Box>
+                            <FormLabel
+                                display='flex'
+                                ms='4px'
+                                fontSize='sm'
+                                fontWeight='500'
+                                color={textColor}
+                                mb='8px'>
+                                Gender<Text color={brandStars}>*</Text>
+                            </FormLabel>
+                            <Select
+                                name='gender_id'
+                                value={gender_id}
+                                disabled={disable}
+                                placeholder='Please Select'
+                                onChange={handleChange}
+                                fontSize='sm'
+                                variant='auth'
+                                size='lg'
+                                mb='24px'>
+                                {genders.map(gender => (
+                                    <option key={gender.id} value={gender.id}>
+                                        {gender.definition}
+                                    </option>
+                                ))}
+                            </Select>
+                        </Box>
+                    </Grid>
+                    <Button
+                        type='submit'
+                        fontSize='sm'
+                        variant='brand'
+                        fontWeight='500'
+                        w='100%'
+                        h='50'
+                        mb='24px'
+                        isDisabled={disable}>
+                        Sign Up
+                    </Button>
+                </FormControl>
+                <Flex
+                    flexDirection='column'
+                    justifyContent='center'
+                    alignItems='start'
+                    maxW='100%'
+                    mt='0px'>
+                    <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
+                        Already have an account?
+                        <NavLink to={links.public.auth.login}>
+                            <Text
+                                color={textColorBrand}
+                                as='span'
+                                ms='5px'
+                                fontWeight='500'>
+                                Sign In
+                            </Text>
+                        </NavLink>
+                    </Text>
                 </Flex>
+            </Flex>
         </AuthLayout>
     );
 }

@@ -4,6 +4,7 @@ import AlertMessage from "../../../common/presentation/components/AlertMessage";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {clearErrors, clearMessages} from "../redux/action";
+import CardLayout from "../../../common/presentation/layouts/CardLayout";
 
 function AuthLayout(props) {
     const {children, heading, description, auth, clearErrors, clearMessages} = props;
@@ -14,7 +15,7 @@ function AuthLayout(props) {
         const errorTimeout = setTimeout(() => {
             clearErrors();
             clearMessages();
-        }, 3000);
+        }, 5000);
 
         return () => clearTimeout(errorTimeout);
     }, [auth.errors, auth.successMessages, clearErrors, clearMessages]);
@@ -42,24 +43,26 @@ function AuthLayout(props) {
                 <Flex
                     alignItems='start'
                     justifyContent='center'
-                    mt={{base: "10px", md: "12vh"}}
+                    mt={{base: "15px", md: "3vh"}}
                     flexDirection='column'>
-                    <Box me='auto'>
-                        <Heading color={textColor} fontSize='36px' mb='10px'>
-                            {heading}
-                        </Heading>
-                        <Text
-                            mb='36px'
-                            ms='4px'
-                            color={textColorSecondary}
-                            fontWeight='400'
-                            fontSize='md'>
-                            {description}
-                        </Text>
-                    </Box>
-                    {auth.errors.length > 0 && errorMessages()}
-                    {auth.successMessages.length > 0 && successMessages()}
-                    {children}
+                    <CardLayout>
+                        <Box me='auto'>
+                            <Heading color={textColor} fontSize='36px' mb='10px'>
+                                {heading}
+                            </Heading>
+                            <Text
+                                mb='36px'
+                                ms='4px'
+                                color={textColorSecondary}
+                                fontWeight='400'
+                                fontSize='md'>
+                                {description}
+                            </Text>
+                        </Box>
+                        {auth.errors.length > 0 && errorMessages()}
+                        {auth.successMessages.length > 0 && successMessages()}
+                        {children}
+                    </CardLayout>
                 </Flex>
             </Flex>
         </Flex>

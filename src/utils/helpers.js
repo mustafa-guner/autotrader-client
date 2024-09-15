@@ -1,4 +1,4 @@
-function errorParser(errObj) {
+export function errorParser(errObj) {
     if (errObj.message) {
         return [errObj.message];
     }
@@ -10,4 +10,16 @@ function errorParser(errObj) {
     });
 }
 
-export default errorParser;
+export function dateFormater(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-EN', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+}
+
+export const maskedAccountNo = (accountNo) => {
+    console.log(accountNo);
+    return `**** **** **** ${accountNo.slice(-4)}`;
+}

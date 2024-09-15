@@ -12,7 +12,6 @@ import {connect} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {links} from "../../../../../utils/constants";
 import {IoMdMoon, IoMdSunny} from "react-icons/io";
-import {SearchBar} from "./Searchbar";
 
 function Links(props) {
     const {secondary, logout, auth} = props;
@@ -22,7 +21,7 @@ function Links(props) {
     const textColor = useColorModeValue('secondaryGray.900', 'white');
     const textColorBrand = useColorModeValue('brand.700', 'brand.400');
     const ethColor = useColorModeValue('gray.700', 'white');
-    const { colorMode, toggleColorMode } = useColorMode();
+    const {colorMode, toggleColorMode} = useColorMode();
 
     const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 0.3)');
     const ethBg = useColorModeValue('secondaryGray.300', 'navy.900');
@@ -128,7 +127,7 @@ function Links(props) {
                         w="40px"
                         h="40px"
                     >
-                        {!auth.user && <Spinner size="sm" />}
+                        {!auth.user && <Spinner size="sm"/>}
                     </Avatar>
                 </MenuButton>
                 <MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none">
@@ -151,7 +150,8 @@ function Links(props) {
                                   _focus={{bg: 'none'}} borderRadius="8px" px="14px">
                             <Text fontSize="sm">Profile</Text>
                         </MenuItem>
-                        <MenuItem _hover={{bg: 'none'}} _focus={{bg: 'none'}} borderRadius="8px" px="14px">
+                        <MenuItem onClick={() => navigate(links.protected.settings)} _hover={{bg: 'none'}}
+                                  _focus={{bg: 'none'}} borderRadius="8px" px="14px">
                             <Text fontSize="sm">Settings</Text>
                         </MenuItem>
                         <MenuItem

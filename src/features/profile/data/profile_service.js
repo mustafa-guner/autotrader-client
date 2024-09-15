@@ -10,8 +10,30 @@ const loadProfile = async () => {
     });
 }
 
+const loadBankAccounts = async () => {
+    const token = localStorage.getItem('token');
+    return await api('/me/bank-accounts', {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+}
+
+const removeBankAccount = async (id) => {
+    const token = localStorage.getItem('token');
+    return await api(`/me/bank-accounts/${id}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
 const ProfileService = {
-    loadProfile
+    loadProfile,
+    loadBankAccounts,
+    removeBankAccount
 }
 
 export default ProfileService;

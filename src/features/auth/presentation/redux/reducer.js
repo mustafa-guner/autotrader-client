@@ -27,6 +27,7 @@ const auth = (state = initialState, action) => {
             };
 
         case types.LOAD_USER_FAILURE:
+            localStorage.removeItem("token");
             return {
                 ...state,
                 isAuth: false,

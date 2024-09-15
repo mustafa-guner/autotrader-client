@@ -1,47 +1,42 @@
 import * as types from "./action_types";
 
 const initialState = {
-    profile: null,
-    bankAccounts: [],
     errors: [],
+    successMessages: [],
     loading: true
 };
 
-const profile = (state = initialState, action) => {
+const settings = (state = initialState, action) => {
     const {type, payload} = action;
 
     switch (type) {
 
-        case types.LOAD_PROFILE_SUCCESS:
+        case types.ADD_BANK_ACCOUNT_SUCCESS:
             return {
                 ...state,
-                profile: payload,
                 loading: false,
+                successMessages: [payload],
                 errors: []
             };
 
-        case types.LOAD_PROFILE_FAILURE:
+        case types.ADD_BANK_ACCOUNT_FAILURE:
             return {
                 ...state,
-                profile: null,
                 loading: false,
+                successMessages: [],
                 errors: payload
             };
 
-        case types.LOAD_BANK_ACCOUNTS_SUCCESS:
+        case types.CLEAR_SETTINGS_ERROR:
             return {
                 ...state,
-                bankAccounts: payload,
-                loading: false,
                 errors: []
             };
 
-        case types.LOAD_BANK_ACCOUNTS_FAILURE:
+        case types.CLEAR_SETTINGS_MESSAGES:
             return {
                 ...state,
-                bankAccounts: state.bankAccounts,
-                loading: false,
-                errors: payload
+                successMessages: []
             };
 
         default:
@@ -49,4 +44,4 @@ const profile = (state = initialState, action) => {
     }
 };
 
-export default profile;
+export default settings;
