@@ -1,6 +1,7 @@
-import {Card, SimpleGrid, Text, useColorModeValue} from "@chakra-ui/react";
+import { SimpleGrid, Text, useColorModeValue} from "@chakra-ui/react";
 import React from "react";
 import Information from "./Information";
+import CardLayout from "../../../common/presentation/layouts/CardLayout";
 
 // Assets
 export default function GeneralInformation(props) {
@@ -13,7 +14,7 @@ export default function GeneralInformation(props) {
         "unset"
     );
     return (
-        <Card mb={{ base: "0px", "2xl": "20px" }} {...rest}>
+        <CardLayout mb={{ base: "0px", "2xl": "20px" }} {...rest}>
             <Text
                 color={textColorPrimary}
                 fontWeight='bold'
@@ -61,6 +62,6 @@ export default function GeneralInformation(props) {
                     value='20 July 1986'
                 />
             </SimpleGrid>
-        </Card>
+        </CardLayout>
     );
 }

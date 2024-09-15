@@ -1,5 +1,6 @@
-import {Avatar, Box, Card, Flex, Text, useColorModeValue} from "@chakra-ui/react";
+import {Avatar, Box, Flex, Text, useColorModeValue} from "@chakra-ui/react";
 import React from "react";
+import CardLayout from "../../../common/presentation/layouts/CardLayout";
 
 export default function Banner(props) {
     const { banner, avatar, name,country, posts, followers, following } = props;
@@ -11,7 +12,7 @@ export default function Banner(props) {
         "#111C44 !important"
     );
     return (
-        <Card mb={{ base: "0px", lg: "20px" }} align='center'>
+        <CardLayout mb={{ base: "0px", lg: "20px" }} align='center'>
             <Box
                 bg={`url(${banner})`}
                 bgSize='cover'
@@ -60,6 +61,6 @@ export default function Banner(props) {
                     </Text>
                 </Flex>
             </Flex>
-        </Card>
+        </CardLayout>
     );
 }

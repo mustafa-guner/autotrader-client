@@ -1,9 +1,10 @@
 import Transaction from "./Transaction";
-import {Card, Text, useColorModeValue} from "@chakra-ui/react";
+import { Text, useColorModeValue} from "@chakra-ui/react";
 import Project1 from "../../../../assets/img/profile/Project1.png";
 import Project2 from "../../../../assets/img/profile/Project2.png";
 import Project3 from "../../../../assets/img/profile/Project3.png";
 import React from "react";
+import CardLayout from "../../../common/presentation/layouts/CardLayout";
 
 export default function Transactions(props) {
     // Chakra Color Mode
@@ -14,7 +15,7 @@ export default function Transactions(props) {
         "unset"
     );
     return (
-        <Card mb={{ base: "0px", "2xl": "20px" }}>
+        <CardLayout mb={{ base: "0px", "2xl": "20px" }}>
             <Text
                 color={textColorPrimary}
                 fontWeight='bold'
@@ -50,6 +51,6 @@ export default function Transactions(props) {
                 link='#'
                 title='Most essential tips for Burnout'
             />
-        </Card>
+        </CardLayout>
     );
 }

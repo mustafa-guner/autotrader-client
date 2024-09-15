@@ -1,7 +1,8 @@
 // Chakra imports
-import {Box, Card, Text, useColorModeValue} from "@chakra-ui/react";
+import {Box, Text, useColorModeValue} from "@chakra-ui/react";
 // Custom components
 import React from "react";
+import CardLayout from "../../../common/presentation/layouts/CardLayout";
 
 export default function Information(props) {
     const { title, value, ...rest } = props;
@@ -10,7 +11,7 @@ export default function Information(props) {
     const textColorSecondary = "gray.400";
     const bg = useColorModeValue("white", "navy.700");
     return (
-        <Card bg={bg} {...rest}>
+        <CardLayout bg={bg} {...rest}>
             <Box>
                 <Text fontWeight='500' color={textColorSecondary} fontSize='sm'>
                     {title}
@@ -19,6 +20,6 @@ export default function Information(props) {
                     {value}
                 </Text>
             </Box>
-        </Card>
+        </CardLayout>
     );
 }

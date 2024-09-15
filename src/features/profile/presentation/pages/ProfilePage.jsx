@@ -1,4 +1,4 @@
-import { Grid, Spinner } from "@chakra-ui/react";
+import {Box, Grid, Spinner} from "@chakra-ui/react";
 import banner from "../../../../assets/img/auth/banner.png";
 import avatar from "../../../../assets/img/avatars/avatar4.png";
 import React, { useEffect } from "react";
@@ -25,7 +25,7 @@ function ProfilePage({ profile, loadProfile }) {
     const country = profileData && profileData.country ? profileData.country.name : "N/A";
 
     return (
-        <CardLayout pt={{ base: "130px", md: "80px", xl: "80px" }}>
+        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
             <Grid gap={{ base: "20px", xl: "20px" }}>
                 <Banner
                     gridArea="1 / 1 / 2 / 2"
@@ -40,7 +40,6 @@ function ProfilePage({ profile, loadProfile }) {
             </Grid>
             <Grid
                 mb="20px"
-                
                 gap={{ base: "20px", xl: "20px" }}>
                 <Transactions
                     gridArea="1 / 2 / 2 / 2"
@@ -58,7 +57,7 @@ function ProfilePage({ profile, loadProfile }) {
                     pe="20px"
                 />
             </Grid>
-        </CardLayout>
+        </Box>
     );
 }
 
