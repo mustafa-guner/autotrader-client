@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {MdNotificationsNone} from 'react-icons/md';
+import {MdCreditCard, MdMoney, MdNotificationsNone} from 'react-icons/md';
 import {FaEthereum} from 'react-icons/fa';
 import {SidebarResponsive} from "../../layouts/SidebarLayout";
 import {logout} from '../../../../auth/presentation/redux/action';
@@ -45,7 +45,9 @@ function Links(props) {
             flexWrap={secondary ? {base: 'wrap', md: 'nowrap'} : 'unset'}
             p="10px"
             borderRadius="30px">
-            {/*<SearchBar mb={secondary ? {base: '10px', md: 'unset'} : 'unset'} me="10px" borderRadius="30px"/>*/}
+            <Text me="6px" fontSize="sm" fontWeight="700" color={ethColor}>
+                {auth.user?.userBalance.balance ? `${auth.user.userBalance.currency} ${auth.user.userBalance.balance}` : <Spinner size="sm" />}
+            </Text>
             <Flex
                 bg={ethBg}
                 display={secondary ? 'flex' : 'none'}

@@ -74,23 +74,12 @@ function DashboardPage({auth, loadUser}) {
                     name='Spend this month'
                     value='$642.39'
                 />
-                <MiniStatistics growth='+23%' name='Sales' value='$574.34'/>
                 <MiniStatistics
                     endContent={
                         <Flex me='-16px' mt='10px'>
                             <FormLabel htmlFor='balance'>
                                 <Avatar src={Usa}/>
                             </FormLabel>
-                            <Select
-                                id='balance'
-                                variant='mini'
-                                mt='5px'
-                                me='0px'
-                                defaultValue='usd'>
-                                <option value='usd'>USD</option>
-                                <option value='eur'>EUR</option>
-                                <option value='gba'>GBA</option>
-                            </Select>
                         </Flex>
                     }
                     name='Your balance'
