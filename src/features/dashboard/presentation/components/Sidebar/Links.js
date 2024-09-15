@@ -5,7 +5,6 @@ import {links} from "../../../../../utils/constants";
 import {
     MdBarChart,
     MdHome,
-    MdOutlineShoppingCart
 } from "react-icons/md";
 
 const sideBarLinks = [
@@ -13,11 +12,6 @@ const sideBarLinks = [
         path: links.protected.dashboard,
         name: "Dashboard",
         icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>
-    },
-    {
-        path: links.protected.shares,
-        name: "Shares",
-        icon: <Icon as={MdOutlineShoppingCart} width='20px' height='20px' color='inherit'/>
     },
     {
         path: links.protected.reports,

@@ -10,7 +10,6 @@ export const links = {
     protected: {
         dashboard: "/dashboard",
         reports: "/reports",
-        shares: "/shares",
         settings: "/settings",
         profile: "/profile",
     }

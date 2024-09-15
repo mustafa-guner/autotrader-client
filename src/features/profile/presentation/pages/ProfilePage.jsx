@@ -20,8 +20,9 @@ function ProfilePage({profile, loadProfile, loadBankAccounts}) {
         return <Spinner size="xl" />;
     }
 
-    // Destructure profileData safely
-    const {profile: profileData = {}, bankAccounts = []} = profile;
+    // Safe check for profileData
+    const profileData = profile.profile || {};
+    const bankAccounts = profile.bankAccounts || [];
 
     // Provide default values for profile data
     const full_name = profileData.full_name || '-';
