@@ -63,7 +63,7 @@ function AddBankAccount({addBankAccount}) {
                 Add Bank Account
             </Text>
             <Text color={textColorSecondary} fontSize='md' me='26px' mb='25px'>
-                Here you can add your bank account to receive payments.
+                Here you can add your bank account to receive payments and deposit funds.
             </Text>
             <FormControl as='form' onSubmit={handleSubmit}>
                 <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap='24px'>
@@ -79,7 +79,7 @@ function AddBankAccount({addBankAccount}) {
                         </FormLabel>
                         <Select
                             name='bank_id'
-                            value={bank_id || ''} // Ensure controlled component
+                            value={bank_id || ''}
                             disabled={disable}
                             placeholder='Please Select'
                             onChange={handleChange}
@@ -106,7 +106,7 @@ function AddBankAccount({addBankAccount}) {
                         </FormLabel>
                         <Input
                             name='account_number'
-                            value={account_number || ''}  // Ensure controlled component
+                            value={account_number || ''}
                             disabled={disable}
                             isRequired
                             variant='auth'

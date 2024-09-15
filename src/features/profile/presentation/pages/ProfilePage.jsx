@@ -1,4 +1,4 @@
-import {Box, Grid, SimpleGrid, Spinner} from "@chakra-ui/react";
+import {Box, Grid, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
 import banner from "../../../../assets/img/auth/banner.png";
 import React, {useEffect} from "react";
 import Banner from "../components/Banner";
@@ -17,17 +17,19 @@ function ProfilePage({profile, loadProfile, loadBankAccounts}) {
     }, [loadProfile, loadBankAccounts]);
 
     if (profile.loading) {
-        return <Spinner size="xl"/>;
+        return <Spinner size="xl" />;
     }
 
-    const {profile: profileData, bankAccounts} = profile;
-    const full_name = profileData.full_name ? profileData.full_name :  '-';
-    const country = profileData.country.name;
-    const email = profileData.email;
-    const dob = dateFormater(profileData.dob);
-    const gender = profileData.gender.definition;
-    const member_since = dateFormater(profileData.email_verified_at);
+    // Destructure profileData safely
+    const {profile: profileData = {}, bankAccounts = []} = profile;
 
+    // Provide default values for profile data
+    const full_name = profileData.full_name || '-';
+    const country = profileData.country?.name || 'N/A';
+    const email = profileData.email || 'N/A';
+    const dob = profileData.dob ? dateFormater(profileData.dob) : 'N/A';
+    const gender = profileData.gender?.definition || 'N/A';
+    const member_since = profileData.email_verified_at ? dateFormater(profileData.email_verified_at) : 'N/A';
 
     return (
         <Box pt={{base: "130px", md: "80px", xl: "80px"}}>
