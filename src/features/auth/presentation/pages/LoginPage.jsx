@@ -52,7 +52,7 @@ function LoginPage({login}) {
 
     const handleClick = () => setShow(!show);
     return (
-        <AuthLayout heading={'Sign In'} description={'Enter your email and password to sign in!'}>
+        <AuthLayout heading={'Login'} description={'Enter your email and password to login!'}>
             <Flex
                 zIndex='2'
                 direction='column'
@@ -139,7 +139,7 @@ function LoginPage({login}) {
                         h='50'
                         isDisabled={disable}
                         mb='24px'>
-                        Sign In
+                        Login
                     </Button>
                 </FormControl>
                 <Flex

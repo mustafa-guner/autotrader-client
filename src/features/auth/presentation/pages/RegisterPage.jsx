@@ -1,8 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {NavLink} from "react-router-dom";
-import {
-    Spinner,
-} from "@chakra-ui/react"
+import {NavLink, useNavigate} from "react-router-dom";
 import {
     Box,
     Button,
@@ -29,6 +26,7 @@ import {links} from "../../../../utils/constants";
 
 
 function RegisterPage({auth, register}) {
+    const navigate = useNavigate();
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
     const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
@@ -40,7 +38,7 @@ function RegisterPage({auth, register}) {
     const [genders, setGenders] = useState([]);
 
     const [formData, setFormData] = useState({});
-    const {firstname, lastname, email, password, password_confirmation, country_id, gender_id,dob} = formData;
+    const {firstname, lastname, email, password, password_confirmation, country_id, gender_id, dob} = formData;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -64,13 +62,17 @@ function RegisterPage({auth, register}) {
         e.preventDefault();
         setDisable(true);
 
-        register(formData).finally(()=>setDisable(false));
+        register(formData).then(() => {
+            setFormData({});
+            navigate(links.public.auth.login);
+            setDisable(false);
+        }).catch(() => setDisable(false));
     }
 
     const handleClick = () => setShow(!show);
 
     return (
-        <AuthLayout heading={'Sign Up'} description={'Create your account by filling in the details below.'}
+        <AuthLayout heading={'Register'} description={'Create your account by filling in the details below.'}
                     auth={auth}>
             <Flex
                 zIndex='2'
@@ -307,7 +309,7 @@ function RegisterPage({auth, register}) {
                         h='50'
                         mb='24px'
                         isDisabled={disable}>
-                        Sign Up
+                        Register
                     </Button>
                 </FormControl>
                 <Flex
@@ -324,7 +326,7 @@ function RegisterPage({auth, register}) {
                                 as='span'
                                 ms='5px'
                                 fontWeight='500'>
-                                Sign In
+                                Login
                             </Text>
                         </NavLink>
                     </Text>

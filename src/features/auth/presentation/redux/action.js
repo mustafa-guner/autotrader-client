@@ -17,6 +17,7 @@ export const register = (formData) => async (dispatch) => {
         dispatch({type: types.REGISTER_SUCCESS, payload: [data.message]});
     } catch (error) {
         dispatch({type: types.REGISTER_FAILURE, payload: errorParser(error.response.data)});
+        throw error;
     }
 };
 
