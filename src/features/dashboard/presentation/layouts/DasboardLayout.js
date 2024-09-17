@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Box, Portal, useDisclosure} from "@chakra-ui/react";
 import SidebarLayout from "./SidebarLayout";
 import NavbarContent from "../components/Navbar/Content";
+import FixedPlugin from "../components/Feedback/Content";
 
 function DashboardLayout({children}) {
     const {onOpen} = useDisclosure();
@@ -36,6 +37,7 @@ function DashboardLayout({children}) {
                         </Box>
                     </Portal>
                     {children}
+                    <FixedPlugin/>
                 </Box>
             </Box>
         </Box>

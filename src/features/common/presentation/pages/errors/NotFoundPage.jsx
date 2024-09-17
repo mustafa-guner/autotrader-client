@@ -15,7 +15,7 @@ function NotFoundPage() {
     return (
         <Box
             width="100vw"
-            backgroundColor={colorMode === 'light' ? '#dfe7f5' : '#0B1437'}
+            backgroundColor={colorMode === 'light' ? '#dfe7f5' : 'navy.900'}
             height="100vh"
             display="flex"
             flexDirection="column"

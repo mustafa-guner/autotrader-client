@@ -33,7 +33,7 @@ function LoginPage({login}) {
     //Authentication action-reducers
     const [disable, setDisable] = useState(false);
     const [formData, setFormData] = useState({});
-    const {email = 'rexyx@mailinator.com', password = 'Pa$$w0rd!'} = formData;
+    const {email, password = 'Pa$$w0rd!'} = formData;
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
     }
