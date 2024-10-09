@@ -16,9 +16,9 @@ import SettingsService from "../../data/settings_service";
 import {MdAdd} from "react-icons/md";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {addBankAccount} from "../redux/action";
+import {useToast} from '@chakra-ui/react';
 
-function AddBankAccount({addBankAccount}) {
+function AddBankAccount() {
     const textColor = useColorModeValue("navy.700", "white");
     const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
     const brandStars = useColorModeValue("brand.500", "brand.400");
@@ -27,6 +27,7 @@ function AddBankAccount({addBankAccount}) {
     const [disable, setDisable] = useState(false);
     const [banks, setBanks] = useState([]);
     const {bank_id, account_number} = formData;
+    const toast = useToast();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,13 +40,26 @@ function AddBankAccount({addBankAccount}) {
         });
     }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         setDisable(true);
-        addBankAccount(formData).finally(() => {
-            setDisable(false);
-            setFormData({});  // Reset form fields after submission
-        });
+        try {
+            const response = await SettingsService.addBankAccount(formData);
+            toast({
+                position: 'top-right',
+                title: 'Success',
+                description: response.data.message,
+                status: 'success',
+            })
+        } catch (e) {
+            toast({
+                position: 'top-right',
+                title: 'Error',
+                description: e.response.data.message,
+                status: 'error',
+            })
+        }
+        setDisable(false);
+        setFormData({});  // Reset form fields after submission
     }
 
     const handleChange = (e) => {
@@ -65,7 +79,7 @@ function AddBankAccount({addBankAccount}) {
             <Text color={textColorSecondary} fontSize='md' me='26px' mb='25px'>
                 Here you can add your bank account to receive payments and deposit funds.
             </Text>
-            <FormControl as='form' onSubmit={handleSubmit}>
+            <FormControl as='form'>
                 <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap='24px'>
                     <Box>
                         <FormLabel
@@ -128,6 +142,7 @@ function AddBankAccount({addBankAccount}) {
                         variant='brand'
                         fontWeight='500'
                         mb='24px'
+                        onClick={handleSubmit}
                         isDisabled={disable}>
                         Add Bank Account <Icon ml='5px' fontSize='20px' as={MdAdd}/>
                     </Button>
@@ -145,4 +160,4 @@ const mapStateToProps = (state) => ({
     settings: state.settings
 });
 
-export default connect(mapStateToProps, {addBankAccount})(AddBankAccount);
+export default connect(mapStateToProps, {})(AddBankAccount);

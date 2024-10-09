@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Button, Icon, Collapse, Box, Textarea, VStack, Select, useColorMode, Text } from "@chakra-ui/react";
-import { IoMdChatboxes } from "react-icons/io";
-import { FeedbackService } from "../../../data/feedback_service";
+import React, {useEffect, useState} from "react";
+import {Button, Icon, Collapse, Box, Textarea, VStack, Select, useColorMode, Text} from "@chakra-ui/react";
+import {IoMdChatboxes} from "react-icons/io";
+import {FeedbackService} from "../../../data/feedback_service";
+import {useToast} from '@chakra-ui/react';
 
 export default function Content(props) {
-    const { ...rest } = props;
+    const {...rest} = props;
     let bgButton = "linear-gradient(135deg, #868CFF 0%, #4318FF 100%)";
-    const { colorMode } = useColorMode();
+    const {colorMode} = useColorMode();
     const [isOpen, setIsOpen] = useState(false);
+    const toast = useToast();
 
     // Initialize formData with default values
-    const [formData, setFormData] = useState({ comment: '', feedback_type_id: '' });
-    const { comment, feedback_type_id } = formData;
+    const [formData, setFormData] = useState({comment: '', feedback_type_id: ''});
+    const {comment, feedback_type_id} = formData;
 
-    const [errors, setErrors] = useState({});
-    const [successMessages, setSuccessMessages] = useState({});
     const [feedbackTypes, setFeedbackTypes] = useState([]);
 
     useEffect(() => {
         FeedbackService.fetchFeedbackTypes()
             .then(response => {
                 setFeedbackTypes(response.data.data);
-            })
-            .catch(err => setErrors({ fetch: "Failed to fetch feedback types." }));
+            });
     }, []);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({...formData, [e.target.name]: e.target.value});
     };
 
     const toggleForm = () => setIsOpen(!isOpen);
@@ -34,12 +33,21 @@ export default function Content(props) {
     const handleFeedbackSubmit = async () => {
         try {
             const response = await FeedbackService.submitFeedback(formData);
-            setSuccessMessages(response.data);
-            setFormData({ comment: '', feedback_type_id: '' }); // Reset form data
+            toast({
+                position: 'top-right',
+                title: 'Success',
+                description: response.data.message,
+                status: 'success',
+            })
+            setFormData({comment: '', feedback_type_id: ''}); // Reset form data
             setIsOpen(false); // Close form on successful submission
         } catch (error) {
-            console.error("Error submitting feedback:", error);
-            setErrors({ submit: "Failed to submit feedback." });
+            toast({
+                position: 'top-right',
+                title: 'Error',
+                description: error.response.data.message,
+                status: 'error',
+            })
         }
     };
 
@@ -124,11 +132,6 @@ export default function Content(props) {
                             Submit Feedback
                         </Button>
                     </VStack>
-                    {/* Display error messages */}
-                    {errors.fetch && <Text centered color='red.500'>{errors.fetch}</Text>}
-                    {errors.submit && <Text color='red.500'>{errors.submit}</Text>}
-                    {/* Display success messages */}
-                    {successMessages.message && <Text color='green.500'>{successMessages.message}</Text>}
                 </Box>
             </Collapse>
         </>
