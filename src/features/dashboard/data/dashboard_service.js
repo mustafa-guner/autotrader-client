@@ -42,8 +42,19 @@ const sellShares = async (data) => {
     });
 }
 
+const fetchTickers = async () => {
+    const token = localStorage.getItem('token');
+    return await api('/tickers', {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
 export const DashboardService = {
     fetchNotifications,
     buyShares,
-    sellShares
+    sellShares,
+    // fetchShares,
+    fetchTickers
 }

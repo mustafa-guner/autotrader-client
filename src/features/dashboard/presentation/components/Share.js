@@ -1,149 +1,65 @@
-import {
-    AvatarGroup,
-    Avatar,
-    Box,
-    Button,
-    Flex,
-    Icon,
-    Image,
-    Link,
-    Text,
-    useColorModeValue,
-} from "@chakra-ui/react";
-import React, {useState} from "react";
-import {IoHeart, IoHeartOutline} from "react-icons/io5";
+import React from "react";
+import { Flex, Icon, Image, Text, useColorModeValue } from "@chakra-ui/react";
 import CardLayout from "../../../common/presentation/layouts/CardLayout";
+import { FaEthereum } from "react-icons/fa";
 
-export default function Share(props) {
-    const {image, name, author, bidders, download, currentbid} = props;
-    const [like, setLike] = useState(false);
-    const textColor = useColorModeValue("navy.700", "white");
-    const textColorBid = useColorModeValue("brand.500", "white");
+const Share = (props) => {
+    const { image, name, author, date, price } = props;
+    const textColor = useColorModeValue("brands.900", "white");
+    const bgItem = useColorModeValue(
+        { bg: "white", boxShadow: "0px 40px 58px -20px rgba(112, 144, 176, 0.12)" },
+        { bg: "navy.700", boxShadow: "unset" }
+    );
+    const textColorDate = useColorModeValue("secondaryGray.600", "white");
     return (
-        <CardLayout p='20px'>
-            <Flex direction={{base: "column"}} justify='center'>
-                <Box mb={{base: "20px", "2xl": "20px"}} position='relative'>
-                    <Image
-                        src={image}
-                        w={{base: "100%", "3xl": "100%"}}
-                        h={{base: "100%", "3xl": "100%"}}
-                        borderRadius='20px'
-                    />
-                    <Button
-                        position='absolute'
-                        bg='white'
-                        _hover={{bg: "whiteAlpha.900"}}
-                        _active={{bg: "white"}}
-                        _focus={{bg: "white"}}
-                        p='0px !important'
-                        top='14px'
-                        right='14px'
-                        borderRadius='50%'
-                        minW='36px'
-                        h='36px'
-                        onClick={() => {
-                            setLike(!like);
-                        }}>
-                        <Icon
-                            transition='0.2s linear'
-                            w='20px'
-                            h='20px'
-                            as={like ? IoHeart : IoHeartOutline}
-                            color='brand.500'
-                        />
-                    </Button>
-                </Box>
-                <Flex flexDirection='column' justify='space-between' h='100%'>
+        <CardLayout
+            _hover={bgItem}
+            bg='transparent'
+            cursor='pointer'
+            boxShadow='unset'
+            py='15px'
+            transition='0.2s linear'>
+            <Flex direction={{ base: "column" }} justify='center'>
+                <Flex position='relative' align='center'>
+                    <Image src={image} w='66px' h='66px' borderRadius='20px' me='16px' />
                     <Flex
-                        justify='space-between'
-                        direction={{
-                            base: "row",
-                            md: "column",
-                            lg: "row",
-                            xl: "column",
-                            "2xl": "row",
-                        }}
-                        mb='auto'>
-                        <Flex direction='column'>
-                            <Text
-                                color={textColor}
-                                fontSize={{
-                                    base: "xl",
-                                    md: "lg",
-                                    lg: "lg",
-                                    xl: "lg",
-                                    "2xl": "md",
-                                    "3xl": "lg",
-                                }}
-                                mb='5px'
-                                fontWeight='bold'
-                                me='14px'>
-                                {name}
-                            </Text>
-                            <Text
-                                color='secondaryGray.600'
-                                fontSize={{
-                                    base: "sm",
-                                }}
-                                fontWeight='400'
-                                me='14px'>
-                                {author}
-                            </Text>
-                        </Flex>
-                        <AvatarGroup
-                            max={3}
-                            color={textColorBid}
-                            size='sm'
-                            mt={{
-                                base: "0px",
-                                md: "10px",
-                                lg: "0px",
-                                xl: "10px",
-                                "2xl": "0px",
+                        direction='column'
+                        w={{ base: "70%", md: "100%" }}
+                        me={{ base: "4px", md: "32px", xl: "10px", "3xl": "32px" }}>
+                        <Text
+                            color={textColor}
+                            fontSize={{
+                                base: "md",
                             }}
-                            fontSize='12px'>
-                            {bidders.map((avt, key) => (
-                                <Avatar key={key} src={avt}/>
-                            ))}
-                        </AvatarGroup>
+                            mb='5px'
+                            fontWeight='bold'
+                            me='14px'>
+                            {name}
+                        </Text>
+                        <Text
+                            color='secondaryGray.600'
+                            fontSize={{
+                                base: "sm",
+                            }}
+                            fontWeight='400'
+                            me='14px'>
+                            {author}
+                        </Text>
                     </Flex>
                     <Flex
-                        align='start'
-                        justify='space-between'
-                        direction={{
-                            base: "row",
-                            md: "column",
-                            lg: "row",
-                            xl: "column",
-                            "2xl": "row",
-                        }}
-                        mt='25px'>
-                        <Text fontWeight='700' fontSize='sm' color={textColorBid}>
-                            Current Bid: {currentbid}
+                        me={{ base: "4px", md: "32px", xl: "10px", "3xl": "32px" }}
+                        align='center'>
+                        <Icon as={FaEthereum} color={textColor} width='9px' me='7px' />
+                        <Text fontWeight='700' fontSize='md' color={textColor}>
+                            {price}
                         </Text>
-                        <Link
-                            href={download}
-                            mt={{
-                                base: "0px",
-                                md: "10px",
-                                lg: "0px",
-                                xl: "10px",
-                                "2xl": "0px",
-                            }}>
-                            <Button
-                                variant='darkBrand'
-                                color='white'
-                                fontSize='sm'
-                                fontWeight='500'
-                                borderRadius='70px'
-                                px='24px'
-                                py='5px'>
-                                Buy
-                            </Button>
-                        </Link>
                     </Flex>
+                    <Text ms='auto' fontWeight='700' fontSize='sm' color={textColorDate}>
+                        {date}
+                    </Text>
                 </Flex>
             </Flex>
         </CardLayout>
     );
 }
+export default Share;
