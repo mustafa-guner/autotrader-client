@@ -13,11 +13,11 @@ const sideBarLinks = [
         name: "Dashboard",
         icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>
     },
-    {
-        path: links.protected.reports,
-        name: "Reports",
-        icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit'/>
-    },
+    // {
+    //     path: links.protected.reports,
+    //     name: "Reports",
+    //     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit'/>
+    // },
 ];
 
 function Links() {

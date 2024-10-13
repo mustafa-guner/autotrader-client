@@ -3,6 +3,7 @@ import * as types from "./action_types";
 const initialState = {
     profile: null,
     bankAccounts: [],
+    paymentMethods: [],
     errors: [],
     loading: true
 };
@@ -40,6 +41,22 @@ const profile = (state = initialState, action) => {
             return {
                 ...state,
                 bankAccounts: state.bankAccounts,
+                loading: false,
+                errors: payload
+            };
+
+        case types.LOAD_PAYMENT_METHODS_SUCCESS:
+            return {
+                ...state,
+                paymentMethods: payload,
+                loading: false,
+                errors: []
+            };
+
+        case types.LOAD_PAYMENT_METHODS_FAILURE:
+            return {
+                ...state,
+                paymentMethods: state.paymentMethods,
                 loading: false,
                 errors: payload
             };

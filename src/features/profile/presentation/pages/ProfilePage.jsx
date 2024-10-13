@@ -6,15 +6,17 @@ import BankAccounts from "../components/BankAccounts";
 import GeneralInformation from "../components/General";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {loadBankAccounts, loadProfile} from "../redux/action";
+import {loadBankAccounts, loadPaymentMethods, loadProfile} from "../redux/action";
 import {dateFormater} from "../../../../utils/helpers";
+import PaymentMethods from "../components/PaymentMethods";
 
-function ProfilePage({profile, loadProfile, loadBankAccounts}) {
+function ProfilePage({profile, loadProfile, loadBankAccounts,loadPaymentMethods}) {
 
     useEffect(() => {
         loadProfile();
         loadBankAccounts();
-    }, [loadProfile, loadBankAccounts]);
+        loadPaymentMethods();
+    }, [loadProfile, loadBankAccounts,loadPaymentMethods]);
 
     if (profile.loading) {
         return <Spinner size="xl" />;
@@ -23,6 +25,7 @@ function ProfilePage({profile, loadProfile, loadBankAccounts}) {
     // Safe check for profileData
     const profileData = profile.profile || {};
     const bankAccounts = profile.bankAccounts || [];
+    const paymentMethods = profile.paymentMethods || [];
 
     // Provide default values for profile data
     const full_name = profileData.full_name || '-';
@@ -54,6 +57,9 @@ function ProfilePage({profile, loadProfile, loadBankAccounts}) {
                     member_since={member_since}
                     country={country}
                 />
+                <PaymentMethods
+                paymentMethods={paymentMethods}
+                />
             </SimpleGrid>
         </Box>
     );
@@ -64,13 +70,15 @@ ProfilePage.propTypes = {
         profile: PropTypes.object,
         bankAccounts: PropTypes.array,
         loading: PropTypes.bool.isRequired,
+        paymentMethods: PropTypes.array,
     }).isRequired,
     loadProfile: PropTypes.func.isRequired,
     loadBankAccounts: PropTypes.func.isRequired,
+    loadPaymentMethods: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
     profile: state.profile,
 });
 
-export default connect(mapStateToProps, {loadProfile, loadBankAccounts})(ProfilePage);
+export default connect(mapStateToProps, {loadProfile, loadBankAccounts,loadPaymentMethods})(ProfilePage);

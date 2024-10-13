@@ -24,7 +24,7 @@ import {
 import {connect} from "react-redux";
 import {MinusIcon, AddIcon} from "@chakra-ui/icons";
 import ModalLayout from "../../../common/presentation/layouts/ModalLayout";
-import {loadBankAccounts} from "../../../profile/presentation/redux/action";
+import {loadBankAccounts, loadPaymentMethods} from "../../../profile/presentation/redux/action";
 import {maskCardNumber, maskedAccountNo} from "../../../../utils/helpers";
 import SettingsService from "../../data/settings_service";
 import {faCcVisa, faCcMastercard} from '@fortawesome/free-brands-svg-icons';
@@ -34,7 +34,7 @@ import {links} from "../../../../utils/constants";
 import InputMask from 'react-input-mask';
 
 
-function Balance({loadBankAccounts, bankAccounts, auth}) {
+function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccounts, auth}) {
     const textColor = useColorModeValue("navy.700", "white");
     const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
     const textColorSecondary = "gray.400";
@@ -95,10 +95,15 @@ function Balance({loadBankAccounts, bankAccounts, auth}) {
 
         fetchBalanceHistories();
 
-        if (isOpenDeposit || isOpenWithdraw) {
+        if (isOpenWithdraw) {
             loadBankAccounts();
         }
-    }, [isOpenWithdraw, isOpenDeposit, loadBankAccounts]);
+
+        if(isOpenDeposit) {
+            loadPaymentMethods();
+
+        }
+    }, [isOpenWithdraw, isOpenDeposit, loadBankAccounts,loadPaymentMethods]);
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
@@ -214,7 +219,6 @@ function Balance({loadBankAccounts, bankAccounts, auth}) {
                             me='auto'
                             mb={{base: "20px", md: "auto"}}>
                             <Grid templateColumns={{base: "1fr", md: "1fr"}} gap='24px'>
-
                                 <Box>
                                     <FormLabel
                                         display='flex'
@@ -237,7 +241,7 @@ function Balance({loadBankAccounts, bankAccounts, auth}) {
                                         mb='24px'
                                         fontWeight='500'
                                         size='lg'/>
-                                    {bankAccounts.length > 0 && (
+                                    {paymentMethods.length > 0 && (
                                         <>
                                             <FormLabel
                                                 display='flex'
@@ -246,21 +250,21 @@ function Balance({loadBankAccounts, bankAccounts, auth}) {
                                                 fontWeight='500'
                                                 color={textColor}
                                                 mb='8px'>
-                                                Bank Account<Text>*</Text>
+                                                Payment Methods<Text>*</Text>
                                             </FormLabel>
                                             <Select
-                                                name='bank_account_id'
+                                                name='payment_method_id'
                                                 placeholder='Please Select'
                                                 onChange={handleChange}
-                                                value={formData.bank_account_id}
+                                                value={formData.payment_method_id}
                                                 fontSize='sm'
                                                 variant='auth'
                                                 size='lg'
-                                                disabled={bankAccounts.length === 0}
+                                                disabled={paymentMethods.length === 0}
                                                 mb='24px'>
-                                                {Array.isArray(bankAccounts) && bankAccounts.map((account, index) => (
+                                                {Array.isArray(paymentMethods) && paymentMethods.map((paymentMethod, index) => (
                                                     <option key={index}
-                                                            value={account.id}>{account.bank.name} ({maskedAccountNo(account.account_number)})</option>
+                                                            value={paymentMethod.id}>({maskedAccountNo(paymentMethod.card_number)})</option>
                                                 ))}
                                             </Select>
                                             <Flex align="center" my="10px">
@@ -508,6 +512,7 @@ function Balance({loadBankAccounts, bankAccounts, auth}) {
 
 const mapStateToProps = (state) => ({
     bankAccounts: state.profile.bankAccounts,
+    paymentMethods: state.profile.paymentMethods,
     auth: state.auth
 });
-export default connect(mapStateToProps, {loadBankAccounts})(Balance);
+export default connect(mapStateToProps, {loadBankAccounts,loadPaymentMethods})(Balance);

@@ -18,3 +18,12 @@ export const loadBankAccounts = () => async (dispatch) => {
         dispatch({type: types.LOAD_BANK_ACCOUNTS_FAILURE, payload: error.response.data.errors});
     }
 }
+
+export const loadPaymentMethods = () => async (dispatch) => {
+    try {
+        const {data} = await ProfileService.loadPaymentMethods();
+        dispatch({type: types.LOAD_PAYMENT_METHODS_SUCCESS, payload: data.data});
+    } catch (error) {
+        dispatch({type: types.LOAD_PAYMENT_METHODS_FAILURE, payload: error.response.data.errors});
+    }
+}

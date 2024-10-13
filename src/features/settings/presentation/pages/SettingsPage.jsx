@@ -1,16 +1,17 @@
-import { Box, Grid, TabIndicator } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import {Box, Grid, TabIndicator} from "@chakra-ui/react";
+import React, {useEffect, useState} from "react";
 import ProfileUpdate from "../components/ProfileUpdate";
 import AddBankAccount from "../components/AddBankAccount";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import {Tabs, TabList, TabPanels, Tab, TabPanel} from '@chakra-ui/react';
 import CardLayout from "../../../common/presentation/layouts/CardLayout";
 import SwitchField from "../../../common/presentation/components/SwitchField";
 import Balance from "../components/Balance";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import AddPaymentMethod from "../components/AddPaymentMethod";
 
-function SettingsPage({ settings }) {
+function SettingsPage({settings}) {
     const location = useLocation();
     const navigate = useNavigate();
     const query = new URLSearchParams(location.search);
@@ -34,18 +35,19 @@ function SettingsPage({ settings }) {
     };
 
     return (
-        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-            <Grid mb="20px" gap={{ base: "20px", xl: "20px" }}>
+        <Box pt={{base: "130px", md: "80px", xl: "80px"}}>
+            <Grid mb="20px" gap={{base: "20px", xl: "20px"}}>
                 <Tabs index={activeTabIndex} onChange={handleTabChange} position='relative' variant='unstyled'>
                     <TabList mx={'25px'}>
-                        <Tab _selected={{ color: 'brand' }}>General</Tab>
-                        <Tab _selected={{ color: 'brand' }}>Account Balance</Tab>
+                        <Tab _selected={{color: 'brand'}}>General</Tab>
+                        <Tab _selected={{color: 'brand'}}>Account Balance</Tab>
                     </TabList>
-                    <TabIndicator mt='-1.5px' height='2px' bg='brandScheme.400' borderRadius='1px' />
+                    <TabIndicator mt='-1.5px' height='2px' bg='brandScheme.400' borderRadius='1px'/>
                     <TabPanels>
                         <TabPanel>
-                            <ProfileUpdate />
-                            <AddBankAccount />
+                            <ProfileUpdate/>
+                            <AddBankAccount/>
+                            <AddPaymentMethod/>
                             <CardLayout>
                                 <SwitchField
                                     isChecked={false}
@@ -59,7 +61,7 @@ function SettingsPage({ settings }) {
                             </CardLayout>
                         </TabPanel>
                         <TabPanel>
-                            <Balance />
+                            <Balance/>
                         </TabPanel>
                     </TabPanels>
                 </Tabs>

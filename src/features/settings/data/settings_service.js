@@ -32,6 +32,17 @@ const addBankAccount = async (formData) => {
     });
 }
 
+const addPaymentMethod = async(formData) => {
+    const token = localStorage.getItem('token');
+    return await api('/me/payment-methods', {
+        method: 'POST',
+        data: formData,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
 const balanceHistories = async () => {
     const token = localStorage.getItem('token');
     return await api('/me/balance-histories', {
@@ -70,6 +81,7 @@ const SettingsService = {
     updateProfile,
     banks,
     addBankAccount,
+    addPaymentMethod,
     withdraw,
     deposit,
     balanceHistories
