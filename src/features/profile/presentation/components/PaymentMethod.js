@@ -86,11 +86,6 @@ function PaymentMethod(props) {
                            src={colorMode == 'light' ? LightModePaymentMethodImage : DarkModePaymentMethodImage}
                            borderRadius='8px' me={{base: '0px', md: '20px'}}/>
                     <Box mt={{base: "10px", md: "0"}} textAlign={{base: 'center', md: 'left'}}>
-                        {paymentMethod.is_default && (
-                            <Badge size='sm' colorScheme='green'>
-                                Default
-                            </Badge>
-                        )}
                         <Text
                             color={textColorPrimary}
                             fontWeight='500'
@@ -115,22 +110,21 @@ function PaymentMethod(props) {
                     </Box>
                 </Flex>
                 <Flex align={'end'} alignItems={'center'} justifyContent={'end'}>
-                    {!paymentMethod.is_default && (
-                        <Button
+                    {!paymentMethod.is_default ? (
+                        <Text
+                            color={'blue.500'}
+                            cursor={'pointer'}
                             onClick={setDefaultPaymentMethod}
-                            variant='no-hover'
-                            me='16px'
-                            ms='auto'
-                            p='0px !important'>
-                            Set Default
-                        </Button>
-                    )}
+                            size={'xs'}>
+                            Set As Default
+                        </Text>
+                    ) : <Badge size='sm' colorScheme='green'>
+                        Default
+                    </Badge>}
                     <Button
                         onClick={handlePaymentMethodDelete}
                         variant='no-hover'
-                        me='16px'
-                        ms='auto'
-                        p='0px !important'>
+                        size={'xs'}>
                         <Icon as={MdCancel} color='red.500' h='18px' w='18px'/>
                     </Button>
                 </Flex>

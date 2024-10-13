@@ -9,7 +9,7 @@ export const links = {
     },
     protected: {
         dashboard: "/dashboard",
-        reports: "/reports",
+        portfolio: "/portfolio",
         settings: "/settings",
         profile: "/profile",
     }

@@ -56,7 +56,7 @@ function SettingsPage({settings}) {
                                     mb="20px"
                                     id="1"
                                     label="Enable AI to manage your account"
-                                    desc="AI will manage your account and make decisions on your behalf."
+                                    desc="AI will manage your account and make decisions on your behalf. Your default payment method will be set accordingly."
                                 />
                             </CardLayout>
                         </TabPanel>
