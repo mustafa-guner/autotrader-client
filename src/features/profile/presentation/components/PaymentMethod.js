@@ -1,4 +1,5 @@
 import {
+    Badge,
     Box, Button,
     Flex,
     Icon,
@@ -50,13 +51,46 @@ function PaymentMethod(props) {
         })
     }
 
+    const setDefaultPaymentMethod = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to set this payment method as default?",
+            icon: 'warning',
+            confirmButtonText: 'Yes',
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                ProfileService.setDefaultPaymentMethod(paymentMethod.id).then((data) => {
+                    Swal.fire({
+                        title: 'Success!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => window.location.reload())
+                });
+            }
+        }).catch((error) => {
+            Swal.fire(
+                'Error!',
+                error.message,
+                'error'
+            );
+        })
+    }
+
     return (
         <Box bg={bg} {...rest} p='14px'>
             <Flex align='center' justifyContent="space-between" direction={{base: "column", md: "row"}}>
                 <Flex align='center' direction={{base: 'column', md: 'row'}}>
-                    <Image width={'80px'} height={'80px'} src={colorMode == 'light' ? LightModePaymentMethodImage : DarkModePaymentMethodImage}
+                    <Image width={'80px'} height={'80px'}
+                           src={colorMode == 'light' ? LightModePaymentMethodImage : DarkModePaymentMethodImage}
                            borderRadius='8px' me={{base: '0px', md: '20px'}}/>
                     <Box mt={{base: "10px", md: "0"}} textAlign={{base: 'center', md: 'left'}}>
+                        {paymentMethod.is_default && (
+                            <Badge size='sm' colorScheme='green'>
+                                Default
+                            </Badge>
+                        )}
                         <Text
                             color={textColorPrimary}
                             fontWeight='500'
@@ -80,7 +114,17 @@ function PaymentMethod(props) {
                         </Text>
                     </Box>
                 </Flex>
-                <Flex align={'end'} justifyContent={'end'}>
+                <Flex align={'end'} alignItems={'center'} justifyContent={'end'}>
+                    {!paymentMethod.is_default && (
+                        <Button
+                            onClick={setDefaultPaymentMethod}
+                            variant='no-hover'
+                            me='16px'
+                            ms='auto'
+                            p='0px !important'>
+                            Set Default
+                        </Button>
+                    )}
                     <Button
                         onClick={handlePaymentMethodDelete}
                         variant='no-hover'

@@ -50,12 +50,23 @@ const removePaymentMethod = async (id) => {
     });
 }
 
+const setDefaultPaymentMethod = async (id) => {
+    const token = localStorage.getItem('token');
+    return await api(`/me/payment-methods/${id}/default`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
 const ProfileService = {
     loadProfile,
     loadBankAccounts,
     removeBankAccount,
     loadPaymentMethods,
-    removePaymentMethod
+    removePaymentMethod,
+    setDefaultPaymentMethod
 }
 
 export default ProfileService;

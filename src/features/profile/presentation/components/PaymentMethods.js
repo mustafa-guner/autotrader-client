@@ -19,14 +19,17 @@ function PaymentMethods(props) {
     );
     return (
         <CardLayout mt={{base:'15px', md:'0px'}} mb={{base: "0px", "2xl": "20px"}}>
-            <Text
-                color={textColorPrimary}
-                fontWeight='bold'
-                fontSize='2xl'
-                mt='10px'
-                mb='4px'>
-                Payment Methods
-            </Text>
+            <Flex justifyContent={'space-between'} alignItems={'center'}>
+                <Text
+                    color={textColorPrimary}
+                    fontWeight='bold'
+                    fontSize='2xl'
+                    mt='10px'
+                    mb='4px'>
+                    Payment Methods
+                </Text>
+                <Button size={'xs'} onClick={()=>navigate(links.protected.settings)}><MdAdd/> Add More</Button>
+            </Flex>
             <Text color={textColorSecondary} fontSize='md' me='26px' mb='40px'>
                 Here you can view the payment methods you've added.
                 You can have a maximum of <span className={'fw-bold'}>3 accounts</span>.
