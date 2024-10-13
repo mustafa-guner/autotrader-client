@@ -71,7 +71,7 @@ function AddBankAccount() {
     };
 
     return (
-        <CardLayout mb={{base: "0px", "2xl": "20px"}}>
+        <CardLayout mb={{base: "30px", "2xl": "20px"}}>
             <Text
                 color={textColorPrimary}
                 fontWeight='bold'

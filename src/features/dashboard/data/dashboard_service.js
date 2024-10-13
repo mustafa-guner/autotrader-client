@@ -10,6 +10,40 @@ const fetchNotifications = async () => {
     });
 }
 
+const fetchShares = async () => {
+    const token = localStorage.getItem('token');
+    return await api('/shares', {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
+const buyShares = async (data) => {
+    const token = localStorage.getItem('token');
+    return await api('/shares/buy', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        data
+    });
+}
+
+const sellShares = async (data) => {
+    const token = localStorage.getItem('token');
+    return await api('/shares/sell', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        data
+    });
+}
+
 export const DashboardService = {
-    fetchNotifications
+    fetchNotifications,
+    buyShares,
+    sellShares
 }

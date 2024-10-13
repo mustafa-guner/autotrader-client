@@ -34,7 +34,7 @@ import {links} from "../../../../utils/constants";
 import InputMask from 'react-input-mask';
 
 
-function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccounts, auth}) {
+function Balance({loadBankAccounts, loadPaymentMethods, paymentMethods, bankAccounts, auth}) {
     const textColor = useColorModeValue("navy.700", "white");
     const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
     const textColorSecondary = "gray.400";
@@ -99,11 +99,11 @@ function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccoun
             loadBankAccounts();
         }
 
-        if(isOpenDeposit) {
+        if (isOpenDeposit) {
             loadPaymentMethods();
 
         }
-    }, [isOpenWithdraw, isOpenDeposit, loadBankAccounts,loadPaymentMethods]);
+    }, [isOpenWithdraw, isOpenDeposit, loadBankAccounts, loadPaymentMethods]);
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
@@ -124,14 +124,14 @@ function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccoun
                     Here you can view your account balance and withdraw or deposit funds.
                 </Text>
                 <Box>
-                    <Text color={textColor} fontSize='5xl' fontWeight='bold'>
+                    <Text color={textColor} fontSize='4xl' fontWeight='bold'>
                         {auth.user?.userBalance.balance ? `${auth.user.userBalance.balance} ${auth.user.userBalance.currency}` :
                             <Spinner size="sm"/>}
                     </Text>
                     <Flex justifyContent={'start'}>
                         <Button
                             type='submit'
-                            fontSize='sm'
+                            fontSize='xs'
                             onClick={onOpenDeposit}
                             variant='brand'
                             mr={'10px'}
@@ -142,7 +142,7 @@ function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccoun
                         </Button>
                         <Button
                             type='submit'
-                            fontSize='sm'
+                            fontSize='xs'
                             onClick={onOpenWithdraw}
                             size={'sm'}
                             variant='brand'
@@ -176,7 +176,7 @@ function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccoun
                         <Tbody>
                             {balanceHistories.length == 0 ? (
                                 <Tr p={'20px'}>
-                                    <Td textAlign={'center'} colSpan={5}>No balance history found</Td>
+                                    <Td textAlign={'center'} colSpan={6}>No balance history found</Td>
                                 </Tr>
                             ) : balanceHistories.map((balanceHistory, index) => (
                                 <Tr key={balanceHistory.id}>
@@ -201,10 +201,10 @@ function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccoun
             <ModalLayout onClose={onCloseDeposit} isOpen={isOpenDeposit} isCentered>
                 <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(10px)'/>
                 <ModalContent>
-                    <ModalHeader>Deposit</ModalHeader>
+                    <ModalHeader pb={'0'}>Deposit</ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
-                        <Text color={textColorSecondary} fontSize='md' me='26px' mb='25px'>
+                        <Text color={'gray.400'} fontSize='sm' mb='10px'>
                             You can select a payment method (if available) and enter the amount you wish to deposit.
                             Alternatively, you can manually add a new payment method below (in USD).
                         </Text>
@@ -285,18 +285,19 @@ function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccoun
                             </Grid>
                             <Box>
                                 <FormLabel
-                                    display='flex'
                                     ms='4px'
                                     fontSize='sm'
                                     fontWeight='500'
                                     color={textColor}
                                     mb='8px'>
-                                    Card Number<Text>*</Text>
-
-                                    <Box ml={2} display="flex" alignItems="center">
-                                        <FontAwesomeIcon style={{marginRight: '5px'}} icon={faCcVisa}/>
-                                        <FontAwesomeIcon icon={faCcMastercard}/>
-                                    </Box>
+                                    <Flex>
+                                        <Text>Card Number*</Text>
+                                        <Box ml={2} display="flex" alignItems="center">
+                                            <FontAwesomeIcon style={{marginRight: '5px'}} icon={faCcVisa}/>
+                                            <FontAwesomeIcon icon={faCcMastercard}/>
+                                        </Box>
+                                    </Flex>
+                                    <Text fontSize={'xs'} color={'gray.400'}>Card number must be 16 digits.</Text>
                                 </FormLabel>
                                 <Input
                                     name='card_number'
@@ -411,10 +412,10 @@ function Balance({loadBankAccounts,loadPaymentMethods,paymentMethods, bankAccoun
             <ModalLayout onClose={onCloseWithdraw} size={'lg'} isOpen={isOpenWithdraw} isCentered>
                 <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(10px)'/>
                 <ModalContent>
-                    <ModalHeader>Withdraw</ModalHeader>
+                    <ModalHeader pb={'0'}>Withdraw</ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
-                        <Text color={textColorSecondary} fontSize='md' me='26px' mb='25px'>
+                        <Text color={'gray.400'} fontSize='sm' mb='10px'>
                             Select your bank account and enter the amount you want to withdraw. (USD)
                         </Text>
                         <Flex my={'10px'} alignItems={'start'} justifyContent={'start'}>
@@ -515,4 +516,4 @@ const mapStateToProps = (state) => ({
     paymentMethods: state.profile.paymentMethods,
     auth: state.auth
 });
-export default connect(mapStateToProps, {loadBankAccounts,loadPaymentMethods})(Balance);
+export default connect(mapStateToProps, {loadBankAccounts, loadPaymentMethods})(Balance);
