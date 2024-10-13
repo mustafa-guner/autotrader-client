@@ -34,7 +34,7 @@ export default function Content(props) {
         try {
             const response = await FeedbackService.submitFeedback(formData);
             toast({
-                position: 'top-right',
+                position: 'bottom-left',
                 title: 'Success',
                 description: response.data.message,
                 status: 'success',
@@ -43,7 +43,7 @@ export default function Content(props) {
             setIsOpen(false); // Close form on successful submission
         } catch (error) {
             toast({
-                position: 'top-right',
+                position: 'bottom-left',
                 title: 'Error',
                 description: error.response.data.message,
                 status: 'error',

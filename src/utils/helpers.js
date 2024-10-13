@@ -20,6 +20,9 @@ export function dateFormater(dateStr) {
 }
 
 export const maskedAccountNo = (accountNo) => {
-    console.log(accountNo);
     return `**** **** **** ${accountNo.slice(-4)}`;
+}
+
+export const maskCardNumber =(cardNumber) =>{
+    return '**** **** **** ' + cardNumber.slice(-4);
 }

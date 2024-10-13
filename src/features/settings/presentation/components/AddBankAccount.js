@@ -45,14 +45,14 @@ function AddBankAccount() {
         try {
             const response = await SettingsService.addBankAccount(formData);
             toast({
-                position: 'top-right',
+                position: 'bottom-left',
                 title: 'Success',
                 description: response.data.message,
                 status: 'success',
             })
         } catch (e) {
             toast({
-                position: 'top-right',
+                position: 'bottom-left',
                 title: 'Error',
                 description: e.response.data.message,
                 status: 'error',

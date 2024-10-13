@@ -1,10 +1,20 @@
 import {
-    Avatar, Button, Flex, Icon, Menu, MenuButton, MenuItem, MenuList,
-    Text, useColorMode, useColorModeValue, Spinner
+    Avatar,
+    Button,
+    Flex,
+    Icon,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Text,
+    useColorMode,
+    useColorModeValue,
+    Spinner,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import React from 'react';
-import {MdCreditCard, MdMoney, MdNotificationsNone} from 'react-icons/md';
+import React, {useEffect} from 'react';
+import { MdNotificationsNone} from 'react-icons/md';
 import {FaEthereum} from 'react-icons/fa';
 import {SidebarResponsive} from "../../layouts/SidebarLayout";
 import {logout} from '../../../../auth/presentation/redux/action';
@@ -12,9 +22,11 @@ import {connect} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {links} from "../../../../../utils/constants";
 import {IoMdMoon, IoMdSunny} from "react-icons/io";
+import {getNotifications} from "../../redux/action";
+
 
 function Links(props) {
-    const {secondary, logout, auth} = props;
+    const {secondary, logout, auth, notifications, getNotifications} = props;
     const navigate = useNavigate();
     const navbarIcon = useColorModeValue('gray.400', 'white');
     let menuBg = useColorModeValue('white', 'navy.800');
@@ -31,10 +43,20 @@ function Links(props) {
         '14px 17px 40px 4px rgba(112, 144, 176, 0.06)'
     );
 
+
+    useEffect(() => {
+        getNotifications();
+    }, [getNotifications]);
+
+
     const handleLogout = (e) => {
         e.preventDefault();
         return logout().finally(() => navigate(links.public.auth.login));
     }
+
+    const handleSettingsClick = () => {
+        navigate(`${links.protected.settings}?tab=balance`);
+    };
 
     return (
         <Flex
@@ -45,8 +67,12 @@ function Links(props) {
             flexWrap={secondary ? {base: 'wrap', md: 'nowrap'} : 'unset'}
             p="10px"
             borderRadius="30px">
-            <Text me="6px" fontSize="sm" fontWeight="700" color={ethColor}>
-                {auth.user?.userBalance.balance ? `${auth.user.userBalance.currency} ${auth.user.userBalance.balance}` : <Spinner size="sm" />}
+            <Text me="6px" fontSize="sm"
+                  onClick={handleSettingsClick}
+                  cursor="pointer"
+                  fontWeight="700" color={ethColor}>
+                {auth.user?.userBalance.balance ? `${auth.user.userBalance.balance} ${auth.user.userBalance.currency}` :
+                    <Spinner size="sm"/>}
             </Text>
             <Flex
                 bg={ethBg}
@@ -83,21 +109,24 @@ function Links(props) {
                     minW={{base: 'unset', md: '400px', xl: '450px'}}
                     maxW={{base: '360px', md: 'unset'}}>
                     <Flex justify="space-between" w="100%" mb="20px">
-                        <Text fontSize="md" fontWeight="600" color={textColor}>
-                            Notifications
-                        </Text>
+                        <Text fontSize="md" fontWeight="600" color={textColor}>Notification</Text>
                         <Text fontSize="sm" fontWeight="500" color={textColorBrand} ms="auto" cursor="pointer">
                             Mark all read
                         </Text>
                     </Flex>
                     <Flex flexDirection="column">
-                        <MenuItem _hover={{bg: 'none'}} _focus={{bg: 'none'}} px="0" borderRadius="8px" mb="10px">
-                            Alicia
-                        </MenuItem>
-                        <MenuItem _hover={{bg: 'none'}} _focus={{bg: 'none'}} px="0" borderRadius="8px" mb="10px">
-                            Henry
-                        </MenuItem>
+                        {Array.isArray(notifications.notifications) && notifications.notifications.length > 0 ? (
+                            notifications.notifications.map((notification, index) => (
+                                <MenuItem key={index} _hover={{bg: 'none'}} _focus={{bg: 'none'}} px="3"
+                                          borderRadius="8px" mb="10px">
+                                    {notification.message}
+                                </MenuItem>
+                            ))
+                        ) : (
+                            <Text>You don't have any notifications</Text>
+                        )}
                     </Flex>
+
                 </MenuList>
             </Menu>
             <Button
@@ -178,11 +207,15 @@ Links.propTypes = {
     secondary: PropTypes.bool,
     onOpen: PropTypes.func,
     logout: PropTypes.func,
-    auth: PropTypes.object
+    auth: PropTypes.object,
+    profile: PropTypes.object,
+    notifications: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
-    auth: state.auth
+    auth: state.auth,
+    profile: state.profile,
+    notifications: state.notifications
 });
 
-export default connect(mapStateToProps, {logout})(Links);
+export default connect(mapStateToProps, {logout, getNotifications})(Links);

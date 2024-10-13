@@ -109,9 +109,6 @@ function DashboardPage({auth, loadUser}) {
                 <Flex
                     flexDirection='column'>
                     <Flex direction='column'>
-                        <SimpleGrid mb="20px" columns={{base: 1, md: 2}} gap='20px'>
-                            <Summary/>
-                        </SimpleGrid>
                         <CardLayout>
                             <Box>
                                 <Grid

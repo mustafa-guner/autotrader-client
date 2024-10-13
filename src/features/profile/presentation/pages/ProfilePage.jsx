@@ -1,4 +1,4 @@
-import {Box, Grid, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
+import {Box, Grid, SimpleGrid, Spinner} from "@chakra-ui/react";
 import banner from "../../../../assets/img/auth/banner.png";
 import React, {useEffect} from "react";
 import Banner from "../components/Banner";

@@ -7,7 +7,7 @@ import {
     InputGroup,
     InputRightElement, Select,
     Text,
-    useColorModeValue
+    useColorModeValue, useToast
 } from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import CardLayout from "../../../common/presentation/layouts/CardLayout";
@@ -18,6 +18,7 @@ import {connect} from "react-redux";
 import {register} from "../../../auth/presentation/redux/action";
 import PublicService from "../../../common/data/public_service";
 import {MdEdit} from 'react-icons/md';
+import SettingsService from "../../data/settings_service";
 
 
 function ProfileUpdate() {
@@ -26,11 +27,12 @@ function ProfileUpdate() {
     const brandStars = useColorModeValue("brand.500", "brand.400");
     const textColorSecondary = "gray.400";
     const [formData, setFormData] = useState({});
+    const toast = useToast();
     const [show, setShow] = useState(false);
     const [disable, setDisable] = useState(false);
     const [countries, setCountries] = useState([]);
     const [genders, setGenders] = useState([]);
-    const { old_password, new_password, country_id, gender_id} = formData;
+    const {old_password, new_password, country_id, gender_id} = formData;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,6 +50,18 @@ function ProfileUpdate() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setDisable(true);
+        console.log(formData)
+        SettingsService.updateProfile(formData).then((res) => toast({
+            position: 'bottom-left',
+            title: 'Success',
+            description: res.data.message,
+            status: 'success',
+        })).catch(e => toast({
+            position: 'bottom-left',
+            title: 'Error',
+            description: e.response.data.message,
+            status: 'error',
+        })).finally(() => setDisable(false));
     }
 
     const handleChange = (e) => {
@@ -86,7 +100,7 @@ function ProfileUpdate() {
                                 value={old_password}
                                 autoComplete='off'
                                 disabled={disable}
-                                isRequired
+                                required={new_password ? true : false}
                                 fontSize='sm'
                                 placeholder='Min. 8 characters'
                                 mb='24px'
@@ -120,7 +134,7 @@ function ProfileUpdate() {
                                 value={new_password}
                                 disabled={disable}
                                 autoComplete='off'
-                                isRequired
+                                required={old_password ? true : false}
                                 fontSize='sm'
                                 placeholder='Min. 8 characters'
                                 mb='24px'
