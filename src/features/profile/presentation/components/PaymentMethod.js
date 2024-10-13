@@ -9,8 +9,8 @@ import {
 import React from "react";
 import {MdCancel} from "react-icons/md";
 
-import DarkModeBankImage from '../../../../assets/img/banks/bank-dark-mode.png';
-import LightModeBankImage from '../../../../assets/img/banks/bank-light-mode.png';
+import DarkModePaymentMethodImage from '../../../../assets/img/payment_methods/payment-method-dark-mode.png';
+import LightModePaymentMethodImage from '../../../../assets/img/payment_methods/payment-method-light-mode.png';
 import {maskCardNumber} from "../../../../utils/helpers";
 import Swal from "sweetalert2";
 import ProfileService from "../../data/profile_service";
@@ -26,7 +26,7 @@ function PaymentMethod(props) {
     const handlePaymentMethodDelete = () => {
         Swal.fire({
             title: 'Are you sure?',
-            text: "Do you want to delete this bank account?",
+            text: "Do you want to delete this payment method?",
             icon: 'warning',
             confirmButtonText: 'Delete',
             showCancelButton: true,
@@ -54,7 +54,7 @@ function PaymentMethod(props) {
         <Box bg={bg} {...rest} p='14px'>
             <Flex align='center' justifyContent="space-between" direction={{base: "column", md: "row"}}>
                 <Flex align='center' direction={{base: 'column', md: 'row'}}>
-                    <Image src={colorMode == 'light' ? LightModeBankImage : DarkModeBankImage}
+                    <Image width={'80px'} height={'80px'} src={colorMode == 'light' ? LightModePaymentMethodImage : DarkModePaymentMethodImage}
                            borderRadius='8px' me={{base: '0px', md: '20px'}}/>
                     <Box mt={{base: "10px", md: "0"}} textAlign={{base: 'center', md: 'left'}}>
                         <Text

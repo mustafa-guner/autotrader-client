@@ -9,17 +9,16 @@ import {
     Text,
     useColorModeValue, useToast
 } from "@chakra-ui/react";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CardLayout from "../../../common/presentation/layouts/CardLayout";
-import {RiEyeCloseLine} from "react-icons/ri";
-import {MdOutlineRemoveRedEye} from "react-icons/md";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {register} from "../../../auth/presentation/redux/action";
+import { connect } from "react-redux";
+import { register } from "../../../auth/presentation/redux/action";
 import PublicService from "../../../common/data/public_service";
-import {MdEdit} from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
 import SettingsService from "../../data/settings_service";
-
 
 function ProfileUpdate() {
     const textColor = useColorModeValue("navy.700", "white");
@@ -32,7 +31,7 @@ function ProfileUpdate() {
     const [disable, setDisable] = useState(false);
     const [countries, setCountries] = useState([]);
     const [genders, setGenders] = useState([]);
-    const {old_password, new_password, country_id, gender_id} = formData;
+    const { old_password, new_password, country_id, gender_id } = formData;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,7 +49,6 @@ function ProfileUpdate() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setDisable(true);
-        console.log(formData)
         SettingsService.updateProfile(formData).then((res) => toast({
             position: 'bottom-left',
             title: 'Success',
@@ -62,16 +60,21 @@ function ProfileUpdate() {
             description: e.response.data.message,
             status: 'error',
         })).finally(() => setDisable(false));
-    }
+    };
 
     const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value});
-    }
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     const handleClick = () => setShow(!show);
 
+    // Function to check if any input has been entered
+    const isFormEmpty = () => {
+        return !old_password && !new_password && !country_id && !gender_id;
+    };
+
     return (
-        <CardLayout mb={{base: "0px", "2xl": "20px"}}>
+        <CardLayout mb={{ base: "0px", "2xl": "20px" }}>
             <Text
                 color={textColorPrimary}
                 fontWeight='bold'
@@ -84,7 +87,7 @@ function ProfileUpdate() {
                 Here you can update your profile. Keep your information up to date.
             </Text>
             <FormControl as='form' onSubmit={handleSubmit}>
-                <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap='24px'>
+                <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap='24px'>
                     <Box>
                         <FormLabel
                             ms='4px'
@@ -112,7 +115,7 @@ function ProfileUpdate() {
                             <InputRightElement display='flex' alignItems='center' mt='4px'>
                                 <Icon
                                     color={textColorSecondary}
-                                    _hover={{cursor: "pointer"}}
+                                    _hover={{ cursor: "pointer" }}
                                     as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
                                     onClick={handleClick}
                                 />
@@ -146,7 +149,7 @@ function ProfileUpdate() {
                             <InputRightElement display='flex' alignItems='center' mt='4px'>
                                 <Icon
                                     color={textColorSecondary}
-                                    _hover={{cursor: "pointer"}}
+                                    _hover={{ cursor: "pointer" }}
                                     as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
                                     onClick={handleClick}
                                 />
@@ -154,7 +157,7 @@ function ProfileUpdate() {
                         </InputGroup>
                     </Box>
                 </Grid>
-                <Grid templateColumns={{base: "1fr", md: "1fr 1fr"}} gap='24px'>
+                <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap='24px'>
                     <Box>
                         <FormLabel
                             display='flex'
@@ -217,22 +220,22 @@ function ProfileUpdate() {
                         variant='brand'
                         fontWeight='500'
                         mb='24px'
-                        isDisabled={disable}>
-                        Update Profile <Icon ml='5px' fontSize='20px' as={MdEdit}/>
+                        isDisabled={disable || isFormEmpty()}>
+                        Update Profile <Icon ml='5px' fontSize='20px' as={MdEdit} />
                     </Button>
                 </Flex>
             </FormControl>
         </CardLayout>
-    )
+    );
 }
 
 ProfileUpdate.propTypes = {
     register: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, {register})(ProfileUpdate);
+export default connect(mapStateToProps, { register })(ProfileUpdate);

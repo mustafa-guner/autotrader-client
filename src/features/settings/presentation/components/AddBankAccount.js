@@ -66,6 +66,10 @@ function AddBankAccount() {
         setFormData({...formData, [e.target.name]: e.target.value});
     }
 
+    const isFormEmpty = () => {
+        return !bank_id || !account_number;
+    };
+
     return (
         <CardLayout mb={{base: "0px", "2xl": "20px"}}>
             <Text
@@ -143,7 +147,7 @@ function AddBankAccount() {
                         fontWeight='500'
                         mb='24px'
                         onClick={handleSubmit}
-                        isDisabled={disable}>
+                        isDisabled={disable || isFormEmpty()}>
                         Add Bank Account <Icon ml='5px' fontSize='20px' as={MdAdd}/>
                     </Button>
                 </Flex>

@@ -28,6 +28,9 @@ export default function Content(props) {
         setFormData({...formData, [e.target.name]: e.target.value});
     };
 
+    const isFormEmpty = () => {
+        return comment === '' || feedback_type_id === '';
+    };
     const toggleForm = () => setIsOpen(!isOpen);
 
     const handleFeedbackSubmit = async () => {
@@ -113,7 +116,7 @@ export default function Content(props) {
                         </Select>
 
                         <Textarea
-                            name='comment' // Add the name attribute here
+                            name='comment'
                             height='200px'
                             placeholder="Your Comment"
                             value={comment}
@@ -127,6 +130,7 @@ export default function Content(props) {
                             fontSize='sm'
                             variant='brand'
                             fontWeight='500'
+                            isDisabled={isFormEmpty()}
                             onClick={handleFeedbackSubmit}
                             w="100%">
                             Submit Feedback

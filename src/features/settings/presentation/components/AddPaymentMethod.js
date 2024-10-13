@@ -68,6 +68,10 @@ function AddPaymentMethod() {
         setFormData((prevState) => ({ ...prevState, [name]: value }));
     };
 
+    const isFormEmpty = () => {
+        return !formData.card_number || !formData.card_holder || !formData.cvv || !formData.expiration_date;
+    };
+
     return (
         <CardLayout mb={{ base: "0px", "2xl": "20px" }}>
             <Text
@@ -192,7 +196,7 @@ function AddPaymentMethod() {
                         variant='brand'
                         fontWeight='500'
                         mb='24px'
-                        isDisabled={disable}>
+                        isDisabled={disable || isFormEmpty()}>
                         Add Payment Method<Icon ml='5px' fontSize='20px' as={MdAdd} />
                     </Button>
                 </Flex>
