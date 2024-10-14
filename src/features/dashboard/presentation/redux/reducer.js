@@ -25,7 +25,7 @@ const notifications = (state = initialState, action) => {
         case types.NEW_NOTIFICATION:
             return {
                 ...state,
-                notifications: [payload, ...state.notifications].slice(0, 3),
+                notifications: [payload, ...state.notifications],
             };
 
         default:

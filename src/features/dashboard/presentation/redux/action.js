@@ -10,3 +10,7 @@ export const getNotifications = () => async (dispatch) => {
         dispatch({type: types.LOAD_NOTIFICATIONS_FAILURE, payload: error.response.data.errors});
     }
 };
+
+export const addNotification = (notification) => async (dispatch) => {
+    dispatch({type: types.NEW_NOTIFICATION, payload: notification});
+}

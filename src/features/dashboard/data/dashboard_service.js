@@ -12,7 +12,7 @@ const fetchNotifications = async () => {
 
 const fetchShares = async () => {
     const token = localStorage.getItem('token');
-    return await api('/shares', {
+    return await api('/me/shares', {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`
@@ -55,6 +55,6 @@ export const DashboardService = {
     fetchNotifications,
     buyShares,
     sellShares,
-    // fetchShares,
+     fetchShares,
     fetchTickers
 }

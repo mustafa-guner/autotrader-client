@@ -63,11 +63,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-
     "autotrader": "concurrently \"npm run react\" \"npm run laravel\"",
     "react": "npm start",
     "laravel": "cd ../autotrader_laravel && php artisan serve"
-
   },
   "eslintConfig": {
     "extends": [

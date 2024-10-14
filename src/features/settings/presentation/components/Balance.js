@@ -64,7 +64,8 @@ function Balance({loadBankAccounts, loadPaymentMethods, paymentMethods, bankAcco
         return SettingsService.deposit(formData).then((response) => {
             return showMessage(response.data.message, true)
         }).then(() => {
-            window.location.reload();
+            onCloseDeposit();
+            // window.location.reload();
         }).catch((e) => showMessage(e.response.data.message, false))
     }
 
@@ -72,7 +73,8 @@ function Balance({loadBankAccounts, loadPaymentMethods, paymentMethods, bankAcco
         return SettingsService.withdraw(formData).then((response) => {
             return showMessage(response.data.message, true)
         }).then(() => {
-            window.location.reload();
+            onCloseWithdraw();
+            // window.location.reload();
         }).catch((e) => showMessage(e.response.data.message, false))
     }
 
@@ -108,6 +110,19 @@ function Balance({loadBankAccounts, loadPaymentMethods, paymentMethods, bankAcco
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
     }
+
+    const resetFormData = () => setFormData({});
+
+    const closeDeposit = () => {
+        resetFormData();
+        onCloseDeposit();
+    };
+
+    const closeWithdraw = () => {
+        resetFormData();
+        onCloseWithdraw();
+    };
+
 
     return (
         <>
@@ -198,7 +213,7 @@ function Balance({loadBankAccounts, loadPaymentMethods, paymentMethods, bankAcco
             </CardLayout>
 
             {/* Deposit Modal */}
-            <ModalLayout onClose={onCloseDeposit} isOpen={isOpenDeposit} isCentered>
+            <ModalLayout onClose={closeDeposit} isOpen={isOpenDeposit} isCentered>
                 <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(10px)'/>
                 <ModalContent>
                     <ModalHeader pb={'0'}>Deposit</ModalHeader>
@@ -409,7 +424,7 @@ function Balance({loadBankAccounts, loadPaymentMethods, paymentMethods, bankAcco
             </ModalLayout>
 
             {/* Withdraw Modal */}
-            <ModalLayout onClose={onCloseWithdraw} size={'lg'} isOpen={isOpenWithdraw} isCentered>
+            <ModalLayout onClose={closeWithdraw} size={'lg'} isOpen={isOpenWithdraw} isCentered>
                 <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(10px)'/>
                 <ModalContent>
                     <ModalHeader pb={'0'}>Withdraw</ModalHeader>

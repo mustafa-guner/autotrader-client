@@ -17,6 +17,19 @@ const auth = (state = initialState, action) => {
 
     switch (type) {
 
+        case types.UPDATE_BALANCE:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    userBalance: {
+                        ...state.user.userBalance,
+                        balance: payload
+                    }
+                }
+            };
+
+
         case types.LOAD_USER_SUCCESS:
             return {
                 ...state,

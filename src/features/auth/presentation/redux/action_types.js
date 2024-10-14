@@ -27,3 +27,6 @@ export const CLEAR_AUTH_ERRORS = 'CLEAR_AUTH_ERRORS';
 
 //Clear Success Messages Action Types
 export const CLEAR_AUTH_MESSAGES = 'CLEAR_AUTH_MESSAGES';
+
+//Update Balance Action Types
+export const UPDATE_BALANCE = 'UPDATE_BALANCE';

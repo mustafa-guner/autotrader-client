@@ -11,43 +11,58 @@ import {
     useColorMode,
     useColorModeValue,
     Spinner,
+    Box
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
-import { MdNotificationsNone} from 'react-icons/md';
-import {FaEthereum} from 'react-icons/fa';
-import {SidebarResponsive} from "../../layouts/SidebarLayout";
-import {logout} from '../../../../auth/presentation/redux/action';
-import {connect} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {links} from "../../../../../utils/constants";
-import {IoMdMoon, IoMdSunny} from "react-icons/io";
-import {getNotifications} from "../../redux/action";
-
+import React, { useEffect, useState } from 'react';
+import { MdNotificationsNone } from 'react-icons/md';
+import { SidebarResponsive } from "../../layouts/SidebarLayout";
+import { logout, updateBalance } from '../../../../auth/presentation/redux/action';
+import { connect, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { links } from "../../../../../utils/constants";
+import { IoMdMoon, IoMdSunny } from "react-icons/io";
+import { addNotification, getNotifications } from "../../redux/action";
+import Pusher from 'pusher-js';
 
 function Links(props) {
-    const {secondary, logout, auth, notifications, getNotifications} = props;
+    const dispatch = useDispatch();
+    const { secondary, logout, auth, notifications, getNotifications } = props;
     const navigate = useNavigate();
     const navbarIcon = useColorModeValue('gray.400', 'white');
-    let menuBg = useColorModeValue('white', 'navy.800');
+    const menuBg = useColorModeValue('white', 'navy.800');
     const textColor = useColorModeValue('secondaryGray.900', 'white');
     const textColorBrand = useColorModeValue('brand.700', 'brand.400');
     const ethColor = useColorModeValue('gray.700', 'white');
-    const {colorMode, toggleColorMode} = useColorMode();
-
-    const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 0.3)');
-    const ethBg = useColorModeValue('secondaryGray.300', 'navy.900');
-    const ethBox = useColorModeValue('white', 'navy.800');
-    const shadow = useColorModeValue(
-        '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
-        '14px 17px 40px 4px rgba(112, 144, 176, 0.06)'
-    );
-
+    const { colorMode, toggleColorMode } = useColorMode();
+    const [isNewNotification, setIsNewNotification] = useState(false);
 
     useEffect(() => {
-        getNotifications();
-    }, [getNotifications]);
+        if (auth.user?.id) {
+            getNotifications();
+            const pusher = new Pusher('cce57173e8fb1f1e49d0', {
+                cluster: 'eu',
+                authEndpoint: 'http://trader.test/api/pusher/auth',
+            });
 
+            const channel = pusher.subscribe(`private-notifications.${auth.user.id}`);
+            channel.bind('App\\Events\\NotificationCreated', function (data) {
+                console.log('Notification received: ', data);
+                dispatch(addNotification(data));
+
+                if (data.balance) {
+                    dispatch(updateBalance(data.balance));
+                }
+
+                setIsNewNotification(true); // Trigger the animation
+                setTimeout(() => setIsNewNotification(false), 1000); // Reset after 1 second
+            });
+
+            return () => {
+                pusher.unsubscribe(`private-notifications.${auth.user.id}`);
+            };
+        }
+    }, [auth.user?.id, getNotifications]);
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -60,11 +75,11 @@ function Links(props) {
 
     return (
         <Flex
-            w={{sm: '100%', md: 'auto'}}
+            w={{ sm: '100%', md: 'auto' }}
             alignItems="center"
             flexDirection="row"
             justifyContent="end"
-            flexWrap={secondary ? {base: 'wrap', md: 'nowrap'} : 'unset'}
+            flexWrap={secondary ? { base: 'wrap', md: 'nowrap' } : 'unset'}
             p="10px"
             borderRadius="30px">
             <Text me="6px" fontSize="sm"
@@ -72,53 +87,61 @@ function Links(props) {
                   cursor="pointer"
                   fontWeight="700" color={ethColor}>
                 {auth.user?.userBalance.balance ? `${auth.user.userBalance.balance} ${auth.user.userBalance.currency}` :
-                    <Spinner size="sm"/>}
+                    <Spinner size="sm" />}
             </Text>
-            <Flex
-                bg={ethBg}
-                display={secondary ? 'flex' : 'none'}
-                borderRadius="30px"
-                ms="auto"
-                p="6px"
-                align="center"
-                me="6px">
-                <Flex align="center" justify="center" bg={ethBox} h="29px" w="29px" borderRadius="30px" me="7px">
-                    <Icon color={ethColor} w="9px" h="14px" as={FaEthereum}/>
-                </Flex>
-                <Text w="max-content" color={ethColor} fontSize="sm" fontWeight="700" me="6px">
-                    1,924
-                    <Text as="span" display={{base: 'none', md: 'unset'}}>
-                        {' '}
-                        ETH
-                    </Text>
-                </Text>
-            </Flex>
-            <SidebarResponsive/>
+            <SidebarResponsive />
             <Menu>
-                <MenuButton p="0px">
-                    <Icon mt="6px" as={MdNotificationsNone} color={navbarIcon} w="18px" h="18px" me="10px"/>
+                <MenuButton position={'relative'} p="0px">
+                        <Icon
+                            mt="6px"
+                            as={MdNotificationsNone}
+                            color={navbarIcon}
+                            w="20px"
+                            h="20px"
+                            me="10px"
+                        />
+                        {notifications.notifications.length > 0 && (
+                            <Box
+                                position="absolute"
+                                top="-5px"
+                                width={'17px'}
+                                height={'17px'}
+                                right="3px"
+                                bg="red.400"
+                                textAlign={'center'}
+                                display={"flex"}
+                                alignItems={'center'}
+                                justifyContent={'center'}
+                                borderRadius="full"
+                                color="white"
+                                fontSize="xs"
+                                zIndex="1"
+                            >
+                                {notifications.notifications.length}
+                            </Box>
+                        )}
                 </MenuButton>
                 <MenuList
-                    boxShadow={shadow}
+                    boxShadow="lg"
                     p="20px"
                     borderRadius="20px"
                     bg={menuBg}
                     border="none"
+                    height={'422px'}
+                    overflowY={'scroll'}
                     mt="22px"
-                    me={{base: '30px', md: 'unset'}}
-                    minW={{base: 'unset', md: '400px', xl: '450px'}}
-                    maxW={{base: '360px', md: 'unset'}}>
+                    me={{ base: '30px', md: 'unset' }}
+                    minW={{ base: 'unset', md: '400px', xl: '450px' }}
+                    maxW={{ base: '360px', md: 'unset' }}>
                     <Flex justify="space-between" w="100%" mb="20px">
                         <Text fontSize="md" fontWeight="600" color={textColor}>Notification</Text>
-                        <Text fontSize="sm" fontWeight="500" color={textColorBrand} ms="auto" cursor="pointer">
-                            Mark all read
-                        </Text>
                     </Flex>
                     <Flex flexDirection="column">
                         {Array.isArray(notifications.notifications) && notifications.notifications.length > 0 ? (
                             notifications.notifications.map((notification, index) => (
-                                <MenuItem key={index} _hover={{bg: 'none'}} _focus={{bg: 'none'}} px="3"
+                                <MenuItem key={index} _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} px="3"
                                           borderRadius="8px" mb="10px">
+                                    <Icon me="10px" as={notification.icon} color={textColorBrand} />
                                     {notification.message}
                                 </MenuItem>
                             ))
@@ -126,7 +149,6 @@ function Links(props) {
                             <Text>You don't have any notifications</Text>
                         )}
                     </Flex>
-
                 </MenuList>
             </Menu>
             <Button
@@ -150,7 +172,7 @@ function Links(props) {
             <Menu>
                 <MenuButton p="0px">
                     <Avatar
-                        _hover={{cursor: 'pointer'}}
+                        _hover={{ cursor: 'pointer' }}
                         color="white"
                         name={auth.user ? auth.user.full_name : ''}
                         bg="#11047A"
@@ -158,10 +180,10 @@ function Links(props) {
                         w="40px"
                         h="40px"
                     >
-                        {!auth.user && <Spinner size="sm"/>}
+                        {!auth.user && <Spinner size="sm" />}
                     </Avatar>
                 </MenuButton>
-                <MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none">
+                <MenuList boxShadow="lg" p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none">
                     <Flex w="100%" mb="0px">
                         <Text
                             ps="20px"
@@ -169,7 +191,7 @@ function Links(props) {
                             pb="10px"
                             w="100%"
                             borderBottom="1px solid"
-                            borderColor={borderColor}
+                            borderColor="gray.200"
                             fontSize="sm"
                             fontWeight="700"
                             color={textColor}>
@@ -181,18 +203,11 @@ function Links(props) {
                                   _focus={{bg: 'none'}} borderRadius="8px" px="14px">
                             <Text fontSize="sm">Profile</Text>
                         </MenuItem>
-                        <MenuItem onClick={() => navigate(links.protected.settings)} _hover={{bg: 'none'}}
-                                  _focus={{bg: 'none'}} borderRadius="8px" px="14px">
-                            <Text fontSize="sm">Settings</Text>
+                        <MenuItem onClick={() => navigate(links.protected.settings)} _hover={{ bg: 'none' }}>
+                            Settings
                         </MenuItem>
-                        <MenuItem
-                            onClick={handleLogout}
-                            _hover={{bg: 'none'}}
-                            _focus={{bg: 'none'}}
-                            color="red.400"
-                            borderRadius="8px"
-                            px="14px">
-                            <Text fontSize="sm">Log out</Text>
+                        <MenuItem onClick={handleLogout} _hover={{ bg: 'none' }}>
+                            Logout
                         </MenuItem>
                     </Flex>
                 </MenuList>
@@ -202,20 +217,16 @@ function Links(props) {
 }
 
 Links.propTypes = {
-    variant: PropTypes.string,
-    fixed: PropTypes.bool,
     secondary: PropTypes.bool,
-    onOpen: PropTypes.func,
-    logout: PropTypes.func,
     auth: PropTypes.object,
-    profile: PropTypes.object,
     notifications: PropTypes.object,
+    getNotifications: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    profile: state.profile,
-    notifications: state.notifications
+    notifications: state.notifications,
 });
 
-export default connect(mapStateToProps, {logout, getNotifications})(Links);
+export default connect(mapStateToProps, { logout, getNotifications })(Links);

@@ -70,3 +70,7 @@ export const clearErrors = () => async (dispatch) => {
 export const clearMessages = () => async (dispatch) => {
     dispatch({type: types.CLEAR_AUTH_MESSAGES});
 }
+
+export const updateBalance = (balance) => async (dispatch) => {
+    dispatch({type: types.UPDATE_BALANCE, payload: balance});
+}

@@ -8,6 +8,7 @@ import ProfilePage from "../../features/profile/presentation/pages/ProfilePage";
 import SettingsPage from "../../features/settings/presentation/pages/SettingsPage";
 
 import {links} from "../../utils/constants";
+import PortfolioPage from "../../features/portfolio/presentation/pages/PortfolioPage";
 
 
 const publicLink = links.public;
@@ -50,6 +51,11 @@ const protectedRoutes = [
     {
         path: protectedLink.settings,
         element: SettingsPage,
+        isProtected: true
+    },
+    {
+        path:protectedLink.portfolio,
+        element: PortfolioPage,
         isProtected: true
     }
 ]
